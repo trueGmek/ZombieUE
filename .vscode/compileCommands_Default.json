@@ -1,0 +1,106 @@
+[
+	{
+		"file": "/home/gmek/Dev/UnrealEngine/Zombie/Source/Zombie/Zombie.Build.cs",
+		"arguments": [
+			"/home/gmek/UnrealEngine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v23_clang-18.1.0-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/gmek/Dev/UnrealEngine/Zombie/.vscode/compileCommands_Default/Zombie.1.rsp"
+		],
+		"directory": "/home/gmek/UnrealEngine/Engine/Source"
+	},
+	{
+		"file": "/home/gmek/Dev/UnrealEngine/Zombie/Source/Zombie/Zombie.cpp",
+		"arguments": [
+			"/home/gmek/UnrealEngine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v23_clang-18.1.0-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/gmek/Dev/UnrealEngine/Zombie/.vscode/compileCommands_Default/Zombie.1.rsp"
+		],
+		"directory": "/home/gmek/UnrealEngine/Engine/Source"
+	},
+	{
+		"file": "/home/gmek/Dev/UnrealEngine/Zombie/Source/Zombie/Zombie.h",
+		"arguments": [
+			"/home/gmek/UnrealEngine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v23_clang-18.1.0-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/gmek/Dev/UnrealEngine/Zombie/.vscode/compileCommands_Default/Zombie.1.rsp"
+		],
+		"directory": "/home/gmek/UnrealEngine/Engine/Source"
+	},
+	{
+		"file": "/home/gmek/Dev/UnrealEngine/Zombie/Source/Zombie/ZombieCharacter.cpp",
+		"arguments": [
+			"/home/gmek/UnrealEngine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v23_clang-18.1.0-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/gmek/Dev/UnrealEngine/Zombie/.vscode/compileCommands_Default/Zombie.1.rsp"
+		],
+		"directory": "/home/gmek/UnrealEngine/Engine/Source"
+	},
+	{
+		"file": "/home/gmek/Dev/UnrealEngine/Zombie/Source/Zombie/ZombieCharacter.h",
+		"arguments": [
+			"/home/gmek/UnrealEngine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v23_clang-18.1.0-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/gmek/Dev/UnrealEngine/Zombie/.vscode/compileCommands_Default/Zombie.1.rsp"
+		],
+		"directory": "/home/gmek/UnrealEngine/Engine/Source"
+	},
+	{
+		"file": "/home/gmek/Dev/UnrealEngine/Zombie/Source/Zombie/ZombieGameMode.cpp",
+		"arguments": [
+			"/home/gmek/UnrealEngine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v23_clang-18.1.0-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/gmek/Dev/UnrealEngine/Zombie/.vscode/compileCommands_Default/Zombie.1.rsp"
+		],
+		"directory": "/home/gmek/UnrealEngine/Engine/Source"
+	},
+	{
+		"file": "/home/gmek/Dev/UnrealEngine/Zombie/Source/Zombie/ZombieGameMode.h",
+		"arguments": [
+			"/home/gmek/UnrealEngine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v23_clang-18.1.0-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/gmek/Dev/UnrealEngine/Zombie/.vscode/compileCommands_Default/Zombie.1.rsp"
+		],
+		"directory": "/home/gmek/UnrealEngine/Engine/Source"
+	},
+	{
+		"file": "/home/gmek/Dev/UnrealEngine/Zombie/Source/Zombie/ZombiePickUpComponent.cpp",
+		"arguments": [
+			"/home/gmek/UnrealEngine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v23_clang-18.1.0-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/gmek/Dev/UnrealEngine/Zombie/.vscode/compileCommands_Default/Zombie.1.rsp"
+		],
+		"directory": "/home/gmek/UnrealEngine/Engine/Source"
+	},
+	{
+		"file": "/home/gmek/Dev/UnrealEngine/Zombie/Source/Zombie/ZombiePickUpComponent.h",
+		"arguments": [
+			"/home/gmek/UnrealEngine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v23_clang-18.1.0-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/gmek/Dev/UnrealEngine/Zombie/.vscode/compileCommands_Default/Zombie.1.rsp"
+		],
+		"directory": "/home/gmek/UnrealEngine/Engine/Source"
+	},
+	{
+		"file": "/home/gmek/Dev/UnrealEngine/Zombie/Source/Zombie/ZombieProjectile.cpp",
+		"arguments": [
+			"/home/gmek/UnrealEngine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v23_clang-18.1.0-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/gmek/Dev/UnrealEngine/Zombie/.vscode/compileCommands_Default/Zombie.1.rsp"
+		],
+		"directory": "/home/gmek/UnrealEngine/Engine/Source"
+	},
+	{
+		"file": "/home/gmek/Dev/UnrealEngine/Zombie/Source/Zombie/ZombieProjectile.h",
+		"arguments": [
+			"/home/gmek/UnrealEngine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v23_clang-18.1.0-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/gmek/Dev/UnrealEngine/Zombie/.vscode/compileCommands_Default/Zombie.1.rsp"
+		],
+		"directory": "/home/gmek/UnrealEngine/Engine/Source"
+	},
+	{
+		"file": "/home/gmek/Dev/UnrealEngine/Zombie/Source/Zombie/ZombieWeaponComponent.cpp",
+		"arguments": [
+			"/home/gmek/UnrealEngine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v23_clang-18.1.0-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/gmek/Dev/UnrealEngine/Zombie/.vscode/compileCommands_Default/Zombie.1.rsp"
+		],
+		"directory": "/home/gmek/UnrealEngine/Engine/Source"
+	},
+	{
+		"file": "/home/gmek/Dev/UnrealEngine/Zombie/Source/Zombie/ZombieWeaponComponent.h",
+		"arguments": [
+			"/home/gmek/UnrealEngine/Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/Linux_x64/v23_clang-18.1.0-rockylinux8/x86_64-unknown-linux-gnu/bin/clang++",
+			"@/home/gmek/Dev/UnrealEngine/Zombie/.vscode/compileCommands_Default/Zombie.1.rsp"
+		],
+		"directory": "/home/gmek/UnrealEngine/Engine/Source"
+	}
+]

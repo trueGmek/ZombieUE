@@ -1,0 +1,879 @@
+{
+	"folders": [
+		{
+			"name": "Zombie",
+			"path": "."
+		},
+		{
+			"name": "UE5",
+			"path": "/home/gmek/UnrealEngine"
+		}
+	],
+	"settings": {
+		"typescript.tsc.autoDetect": "off",
+		"npm.autoDetect": "off",
+		"terminal.integrated.env.linux": {
+			"PATH": "/home/gmek/UnrealEngine/Engine/Binaries/ThirdParty/DotNet/8.0.300/linux-x64:${env:PATH}",
+			"DOTNET_ROOT": "/home/gmek/UnrealEngine/Engine/Binaries/ThirdParty/DotNet/8.0.300/linux-x64",
+			"DOTNET_HOST_PATH": "/home/gmek/UnrealEngine/Engine/Binaries/ThirdParty/DotNet/8.0.300/linux-x64/dotnet",
+			"DOTNET_MULTILEVEL_LOOKUP": "0",
+			"DOTNET_ROLL_FORWARD": "LatestMajor"
+		}
+	},
+	"extensions": {
+		"recommendations": [
+			"ms-vscode.cpptools",
+			"ms-dotnettools.csharp"
+		]
+	},
+	"tasks": {
+		"version": "2.0.0",
+		"tasks": [
+			{
+				"label": "Zombie Linux Debug Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Zombie",
+					"Linux",
+					"Debug",
+					"/home/gmek/Dev/UnrealEngine/Zombie/Zombie.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/gmek/UnrealEngine"
+				}
+			},
+			{
+				"label": "Zombie Linux Debug Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Zombie",
+					"Linux",
+					"Debug",
+					"/home/gmek/Dev/UnrealEngine/Zombie/Zombie.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"Zombie Linux Debug Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/gmek/UnrealEngine"
+				}
+			},
+			{
+				"label": "Zombie Linux Debug Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Zombie",
+					"Linux",
+					"Debug",
+					"/home/gmek/Dev/UnrealEngine/Zombie/Zombie.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/gmek/UnrealEngine"
+				}
+			},
+			{
+				"label": "Zombie Linux DebugGame Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Zombie",
+					"Linux",
+					"DebugGame",
+					"/home/gmek/Dev/UnrealEngine/Zombie/Zombie.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/gmek/UnrealEngine"
+				}
+			},
+			{
+				"label": "Zombie Linux DebugGame Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Zombie",
+					"Linux",
+					"DebugGame",
+					"/home/gmek/Dev/UnrealEngine/Zombie/Zombie.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"Zombie Linux DebugGame Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/gmek/UnrealEngine"
+				}
+			},
+			{
+				"label": "Zombie Linux DebugGame Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Zombie",
+					"Linux",
+					"DebugGame",
+					"/home/gmek/Dev/UnrealEngine/Zombie/Zombie.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/gmek/UnrealEngine"
+				}
+			},
+			{
+				"label": "Zombie Linux Development Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Zombie",
+					"Linux",
+					"Development",
+					"/home/gmek/Dev/UnrealEngine/Zombie/Zombie.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/gmek/UnrealEngine"
+				}
+			},
+			{
+				"label": "Zombie Linux Development Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Zombie",
+					"Linux",
+					"Development",
+					"/home/gmek/Dev/UnrealEngine/Zombie/Zombie.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"Zombie Linux Development Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/gmek/UnrealEngine"
+				}
+			},
+			{
+				"label": "Zombie Linux Development Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Zombie",
+					"Linux",
+					"Development",
+					"/home/gmek/Dev/UnrealEngine/Zombie/Zombie.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/gmek/UnrealEngine"
+				}
+			},
+			{
+				"label": "Zombie Linux Test Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Zombie",
+					"Linux",
+					"Test",
+					"/home/gmek/Dev/UnrealEngine/Zombie/Zombie.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/gmek/UnrealEngine"
+				}
+			},
+			{
+				"label": "Zombie Linux Test Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Zombie",
+					"Linux",
+					"Test",
+					"/home/gmek/Dev/UnrealEngine/Zombie/Zombie.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"Zombie Linux Test Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/gmek/UnrealEngine"
+				}
+			},
+			{
+				"label": "Zombie Linux Test Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Zombie",
+					"Linux",
+					"Test",
+					"/home/gmek/Dev/UnrealEngine/Zombie/Zombie.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/gmek/UnrealEngine"
+				}
+			},
+			{
+				"label": "Zombie Linux Shipping Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Zombie",
+					"Linux",
+					"Shipping",
+					"/home/gmek/Dev/UnrealEngine/Zombie/Zombie.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/gmek/UnrealEngine"
+				}
+			},
+			{
+				"label": "Zombie Linux Shipping Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Zombie",
+					"Linux",
+					"Shipping",
+					"/home/gmek/Dev/UnrealEngine/Zombie/Zombie.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"Zombie Linux Shipping Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/gmek/UnrealEngine"
+				}
+			},
+			{
+				"label": "Zombie Linux Shipping Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Zombie",
+					"Linux",
+					"Shipping",
+					"/home/gmek/Dev/UnrealEngine/Zombie/Zombie.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/gmek/UnrealEngine"
+				}
+			},
+			{
+				"label": "Zombie LinuxArm64 Debug Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Zombie",
+					"LinuxArm64",
+					"Debug",
+					"/home/gmek/Dev/UnrealEngine/Zombie/Zombie.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/gmek/UnrealEngine"
+				}
+			},
+			{
+				"label": "Zombie LinuxArm64 Debug Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Zombie",
+					"LinuxArm64",
+					"Debug",
+					"/home/gmek/Dev/UnrealEngine/Zombie/Zombie.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"Zombie LinuxArm64 Debug Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/gmek/UnrealEngine"
+				}
+			},
+			{
+				"label": "Zombie LinuxArm64 Debug Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Zombie",
+					"LinuxArm64",
+					"Debug",
+					"/home/gmek/Dev/UnrealEngine/Zombie/Zombie.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/gmek/UnrealEngine"
+				}
+			},
+			{
+				"label": "Zombie LinuxArm64 DebugGame Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Zombie",
+					"LinuxArm64",
+					"DebugGame",
+					"/home/gmek/Dev/UnrealEngine/Zombie/Zombie.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/gmek/UnrealEngine"
+				}
+			},
+			{
+				"label": "Zombie LinuxArm64 DebugGame Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Zombie",
+					"LinuxArm64",
+					"DebugGame",
+					"/home/gmek/Dev/UnrealEngine/Zombie/Zombie.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"Zombie LinuxArm64 DebugGame Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/gmek/UnrealEngine"
+				}
+			},
+			{
+				"label": "Zombie LinuxArm64 DebugGame Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Zombie",
+					"LinuxArm64",
+					"DebugGame",
+					"/home/gmek/Dev/UnrealEngine/Zombie/Zombie.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/gmek/UnrealEngine"
+				}
+			},
+			{
+				"label": "Zombie LinuxArm64 Development Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Zombie",
+					"LinuxArm64",
+					"Development",
+					"/home/gmek/Dev/UnrealEngine/Zombie/Zombie.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/gmek/UnrealEngine"
+				}
+			},
+			{
+				"label": "Zombie LinuxArm64 Development Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Zombie",
+					"LinuxArm64",
+					"Development",
+					"/home/gmek/Dev/UnrealEngine/Zombie/Zombie.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"Zombie LinuxArm64 Development Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/gmek/UnrealEngine"
+				}
+			},
+			{
+				"label": "Zombie LinuxArm64 Development Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Zombie",
+					"LinuxArm64",
+					"Development",
+					"/home/gmek/Dev/UnrealEngine/Zombie/Zombie.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/gmek/UnrealEngine"
+				}
+			},
+			{
+				"label": "Zombie LinuxArm64 Test Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Zombie",
+					"LinuxArm64",
+					"Test",
+					"/home/gmek/Dev/UnrealEngine/Zombie/Zombie.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/gmek/UnrealEngine"
+				}
+			},
+			{
+				"label": "Zombie LinuxArm64 Test Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Zombie",
+					"LinuxArm64",
+					"Test",
+					"/home/gmek/Dev/UnrealEngine/Zombie/Zombie.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"Zombie LinuxArm64 Test Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/gmek/UnrealEngine"
+				}
+			},
+			{
+				"label": "Zombie LinuxArm64 Test Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Zombie",
+					"LinuxArm64",
+					"Test",
+					"/home/gmek/Dev/UnrealEngine/Zombie/Zombie.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/gmek/UnrealEngine"
+				}
+			},
+			{
+				"label": "Zombie LinuxArm64 Shipping Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Zombie",
+					"LinuxArm64",
+					"Shipping",
+					"/home/gmek/Dev/UnrealEngine/Zombie/Zombie.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/gmek/UnrealEngine"
+				}
+			},
+			{
+				"label": "Zombie LinuxArm64 Shipping Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Zombie",
+					"LinuxArm64",
+					"Shipping",
+					"/home/gmek/Dev/UnrealEngine/Zombie/Zombie.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"Zombie LinuxArm64 Shipping Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/gmek/UnrealEngine"
+				}
+			},
+			{
+				"label": "Zombie LinuxArm64 Shipping Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"Zombie",
+					"LinuxArm64",
+					"Shipping",
+					"/home/gmek/Dev/UnrealEngine/Zombie/Zombie.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/gmek/UnrealEngine"
+				}
+			},
+			{
+				"label": "ZombieEditor Linux Debug Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ZombieEditor",
+					"Linux",
+					"Debug",
+					"/home/gmek/Dev/UnrealEngine/Zombie/Zombie.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/gmek/UnrealEngine"
+				}
+			},
+			{
+				"label": "ZombieEditor Linux Debug Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ZombieEditor",
+					"Linux",
+					"Debug",
+					"/home/gmek/Dev/UnrealEngine/Zombie/Zombie.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"ZombieEditor Linux Debug Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/gmek/UnrealEngine"
+				}
+			},
+			{
+				"label": "ZombieEditor Linux Debug Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ZombieEditor",
+					"Linux",
+					"Debug",
+					"/home/gmek/Dev/UnrealEngine/Zombie/Zombie.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/gmek/UnrealEngine"
+				}
+			},
+			{
+				"label": "ZombieEditor Linux DebugGame Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ZombieEditor",
+					"Linux",
+					"DebugGame",
+					"/home/gmek/Dev/UnrealEngine/Zombie/Zombie.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/gmek/UnrealEngine"
+				}
+			},
+			{
+				"label": "ZombieEditor Linux DebugGame Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ZombieEditor",
+					"Linux",
+					"DebugGame",
+					"/home/gmek/Dev/UnrealEngine/Zombie/Zombie.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"ZombieEditor Linux DebugGame Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/gmek/UnrealEngine"
+				}
+			},
+			{
+				"label": "ZombieEditor Linux DebugGame Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ZombieEditor",
+					"Linux",
+					"DebugGame",
+					"/home/gmek/Dev/UnrealEngine/Zombie/Zombie.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/gmek/UnrealEngine"
+				}
+			},
+			{
+				"label": "ZombieEditor Linux Development Build",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ZombieEditor",
+					"Linux",
+					"Development",
+					"/home/gmek/Dev/UnrealEngine/Zombie/Zombie.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/gmek/UnrealEngine"
+				}
+			},
+			{
+				"label": "ZombieEditor Linux Development Rebuild",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ZombieEditor",
+					"Linux",
+					"Development",
+					"/home/gmek/Dev/UnrealEngine/Zombie/Zombie.uproject",
+					"-waitmutex"
+				],
+				"problemMatcher": "$msCompile",
+				"dependsOn": [
+					"ZombieEditor Linux Development Clean"
+				],
+				"type": "shell",
+				"options": {
+					"cwd": "/home/gmek/UnrealEngine"
+				}
+			},
+			{
+				"label": "ZombieEditor Linux Development Clean",
+				"group": "build",
+				"command": "Engine/Build/BatchFiles/Linux/Build.sh",
+				"args": [
+					"ZombieEditor",
+					"Linux",
+					"Development",
+					"/home/gmek/Dev/UnrealEngine/Zombie/Zombie.uproject",
+					"-waitmutex",
+					"-clean"
+				],
+				"problemMatcher": "$msCompile",
+				"type": "shell",
+				"options": {
+					"cwd": "/home/gmek/UnrealEngine"
+				}
+			}
+		]
+	},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+			{
+				"name": "Launch Zombie (Debug)",
+				"request": "launch",
+				"program": "/home/gmek/Dev/UnrealEngine/Zombie/Binaries/Linux/UnrealGame-Linux-Debug",
+				"preLaunchTask": "Zombie Linux Debug Build",
+				"args": [
+				],
+				"cwd": "/home/gmek/UnrealEngine",
+				"type": "cppdbg",
+				"visualizerFile": "/home/gmek/UnrealEngine/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+				"showDisplayString": true
+			},
+			{
+				"name": "Launch Zombie (DebugGame)",
+				"request": "launch",
+				"program": "/home/gmek/Dev/UnrealEngine/Zombie/Binaries/Linux/UnrealGame-Linux-DebugGame",
+				"preLaunchTask": "Zombie Linux DebugGame Build",
+				"args": [
+				],
+				"cwd": "/home/gmek/UnrealEngine",
+				"type": "cppdbg",
+				"visualizerFile": "/home/gmek/UnrealEngine/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+				"showDisplayString": true
+			},
+			{
+				"name": "Launch Zombie (Development)",
+				"request": "launch",
+				"program": "/home/gmek/Dev/UnrealEngine/Zombie/Binaries/Linux/UnrealGame",
+				"preLaunchTask": "Zombie Linux Development Build",
+				"args": [
+				],
+				"cwd": "/home/gmek/UnrealEngine",
+				"type": "cppdbg",
+				"visualizerFile": "/home/gmek/UnrealEngine/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+				"showDisplayString": true
+			},
+			{
+				"name": "Launch Zombie (Test)",
+				"request": "launch",
+				"program": "/home/gmek/Dev/UnrealEngine/Zombie/Binaries/Linux/UnrealGame-Linux-Test",
+				"preLaunchTask": "Zombie Linux Test Build",
+				"args": [
+				],
+				"cwd": "/home/gmek/UnrealEngine",
+				"type": "cppdbg",
+				"visualizerFile": "/home/gmek/UnrealEngine/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+				"showDisplayString": true
+			},
+			{
+				"name": "Launch Zombie (Shipping)",
+				"request": "launch",
+				"program": "/home/gmek/Dev/UnrealEngine/Zombie/Binaries/Linux/UnrealGame-Linux-Shipping",
+				"preLaunchTask": "Zombie Linux Shipping Build",
+				"args": [
+				],
+				"cwd": "/home/gmek/UnrealEngine",
+				"type": "cppdbg",
+				"visualizerFile": "/home/gmek/UnrealEngine/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+				"showDisplayString": true
+			},
+			{
+				"name": "Launch ZombieEditor (Debug)",
+				"request": "launch",
+				"program": "/home/gmek/UnrealEngine/Engine/Binaries/Linux/UnrealEditor-Linux-Debug",
+				"preLaunchTask": "ZombieEditor Linux Debug Build",
+				"args": [
+					"/home/gmek/Dev/UnrealEngine/Zombie/Zombie.uproject"
+				],
+				"cwd": "/home/gmek/UnrealEngine",
+				"type": "cppdbg",
+				"visualizerFile": "/home/gmek/UnrealEngine/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+				"showDisplayString": true
+			},
+			{
+				"name": "Launch ZombieEditor (DebugGame)",
+				"request": "launch",
+				"program": "/home/gmek/UnrealEngine/Engine/Binaries/Linux/UnrealEditor-Linux-DebugGame",
+				"preLaunchTask": "ZombieEditor Linux DebugGame Build",
+				"args": [
+					"/home/gmek/Dev/UnrealEngine/Zombie/Zombie.uproject"
+				],
+				"cwd": "/home/gmek/UnrealEngine",
+				"type": "cppdbg",
+				"visualizerFile": "/home/gmek/UnrealEngine/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+				"showDisplayString": true
+			},
+			{
+				"name": "Launch ZombieEditor (Development)",
+				"request": "launch",
+				"program": "/home/gmek/UnrealEngine/Engine/Binaries/Linux/UnrealEditor",
+				"preLaunchTask": "ZombieEditor Linux Development Build",
+				"args": [
+					"/home/gmek/Dev/UnrealEngine/Zombie/Zombie.uproject"
+				],
+				"cwd": "/home/gmek/UnrealEngine",
+				"type": "cppdbg",
+				"visualizerFile": "/home/gmek/UnrealEngine/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+				"showDisplayString": true
+			},
+			{
+				"name": "Generate Project Files",
+				"type": "coreclr",
+				"request": "launch",
+				"preLaunchTask": "UnrealBuildTool Linux Development Build",
+				"program": "/home/gmek/UnrealEngine/Engine/Build/BatchFiles/RunUBT.bat",
+				"args": [
+					"-projectfiles",
+					"-vscode",
+					"-project=/home/gmek/Dev/UnrealEngine/Zombie/Zombie.uproject",
+					"-game",
+					"-engine",
+					"-dotnet"
+				],
+				"env": {
+					"PATH": "/home/gmek/UnrealEngine/Engine/Binaries/ThirdParty/DotNet/8.0.300/linux-x64:${env:PATH}",
+					"DOTNET_ROOT": "/home/gmek/UnrealEngine/Engine/Binaries/ThirdParty/DotNet/8.0.300/linux-x64",
+					"DOTNET_HOST_PATH": "/home/gmek/UnrealEngine/Engine/Binaries/ThirdParty/DotNet/8.0.300/linux-x64/dotnet",
+					"DOTNET_MULTILEVEL_LOOKUP": "0",
+					"DOTNET_ROLL_FORWARD": "LatestMajor"
+				},
+				"console": "internalConsole",
+				"internalConsoleOptions": "openOnSessionStart",
+				"stopAtEntry": false,
+				"cwd": "/home/gmek/UnrealEngine"
+			}
+		]
+	}
+}
