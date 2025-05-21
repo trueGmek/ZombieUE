@@ -101,7 +101,11 @@ void UAutomaticWeaponComponent::Fire() const
 	ensureMsgf(GetWorld(), TEXT("World != nullptr"));
 	UWorld* const World = GetWorld();
 
-	SpawnProjectile(CharacterController, World);
+	if (Type == EType::Projectile)
+		SpawnProjectile(CharacterController, World);
+	if (Type == EType::Hitscan)
+		HitScan(CharacterController);
+
 
 	ManageFX();
 }
@@ -136,4 +140,37 @@ void UAutomaticWeaponComponent::SpawnProjectile(AController* const CharacterCont
 		ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
 	ensureMsgf(ProjectileClass, TEXT("ProjectileClass != nullptr"));
 	World->SpawnActor<AZombieProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, ActorSpawnParams);
+}
+
+void UAutomaticWeaponComponent::HitScan(AController* const CharacterController) const
+{
+	// Get the player's view point
+	FVector EyeLocation;
+	FRotator EyeRotation;
+	CharacterController->GetActorEyesViewPoint(EyeLocation, EyeRotation);
+	const FVector End = EyeLocation + EyeRotation.Vector() * 1000;
+
+	FHitResult HitResult{};
+	FCollisionQueryParams QueryParams;
+	QueryParams.AddIgnoredActor(CharacterController);
+	QueryParams.bTraceComplex = true;
+	bool bHit = GetWorld()->LineTraceSingleByChannel(HitResult, EyeLocation, End, ECC_Visibility, QueryParams);
+
+	if (bHit)
+	{
+		DrawDebugLine(GetWorld(), EyeLocation, HitResult.Location, FColor::Red, false, 1.0f, 0, 1.0f);
+		DrawDebugSphere(GetWorld(), HitResult.Location, 8.0f, 12, FColor::Green, false, 1.0f);
+
+		AActor* HitActor = HitResult.GetActor();
+		if (HitActor)
+		{
+			UGameplayStatics::ApplyPointDamage(HitActor, 20.0f, EyeRotation.Vector(), HitResult,
+			                                   CharacterController, CharacterController, nullptr);
+		}
+	}
+	else
+	{
+		// Debug line for miss
+		DrawDebugLine(GetWorld(), EyeLocation, End, FColor::Blue, false, 1.0f, 0, 1.0f);
+	}
 }

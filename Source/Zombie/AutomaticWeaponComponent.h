@@ -6,6 +6,9 @@ class UInputMappingContext;
 class AZombieCharacter;
 class UInputAction;
 
+UENUM()
+enum class EType { Projectile, Hitscan };
+
 UCLASS(Blueprintable, BlueprintType, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class ZOMBIE_API UAutomaticWeaponComponent : public USkeletalMeshComponent
 {
@@ -37,6 +40,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
 	float Cooldown{1};
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Gameplay, meta=(AllowPrivateAccess = "true"))
+	EType Type{EType::Projectile};
+
 private:
 	AZombieCharacter* Character;
 
@@ -53,11 +59,11 @@ public:
 
 	virtual void PostEditChangeProperty(struct FPropertyChangedEvent& PropertyChangedEvent) override;
 
-
 private:
 	void Fire() const;
 	void CacheFirePressed();
 	void CacheFireReleased();
 	void SpawnProjectile(AController* CharacterController, UWorld* World) const;
+	void HitScan(AController* const CharacterController) const;
 	void ManageFX() const;
 };
