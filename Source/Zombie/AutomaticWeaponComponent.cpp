@@ -21,10 +21,7 @@ bool UAutomaticWeaponComponent::AttachWeaponToPlayer(AZombieCharacter* TargetCha
 
 	// Attach the weapon to the First Person Character
 	FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, true);
-	
-	GLog->Log("Owner before attaching: " + GetOwner()->GetName());
 	AttachToComponent(Character->GetMesh1P(), AttachmentRules, FName(TEXT("GripPoint")));
-	GLog->Log("Owner after attaching: " + GetOwner()->GetName());
 
 	BindInputs();
 
@@ -69,9 +66,9 @@ void UAutomaticWeaponComponent::TickComponent(float DeltaTime, ELevelTick TickTy
 	}
 }
 
-void UAutomaticWeaponComponent::OnRegister()
+void UAutomaticWeaponComponent::PostEditChangeProperty(struct FPropertyChangedEvent& PropertyChangedEvent)
 {
-	Super::OnRegister();
+	Super::PostEditChangeProperty(PropertyChangedEvent);
 
 #if WITH_EDITOR
 	if (GetWorld())
@@ -103,19 +100,14 @@ void UAutomaticWeaponComponent::Fire()
 	AController* const CharacterController = Character->GetController();
 	UWorld* const World = GetWorld();
 
-	GLog->Log("Character name: " + Character->GetName());
-	GLog->Log("ControllerName name: " + CharacterController->GetName());
-	
 	ensureMsgf(ProjectileClass, TEXT("ProjectileClass != nullptr"));
 	ensureMsgf(World, TEXT("World != nullptr"));
-	
+
 	APlayerController* PlayerController = Cast<APlayerController>(CharacterController);
-	
+
 	const FRotator SpawnRotation = PlayerController->PlayerCameraManager->GetCameraRotation();
 	// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
 	const FVector SpawnLocation = GetOwner()->GetActorLocation() + SpawnRotation.RotateVector(MuzzleOffset);
-	
-	GLog->Log("Owner name: " + GetOwner()->GetName());
 
 	//Set Spawn Collision Handling Override
 	FActorSpawnParameters ActorSpawnParams;
