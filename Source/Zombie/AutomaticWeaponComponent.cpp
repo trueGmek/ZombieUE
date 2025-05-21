@@ -84,42 +84,30 @@ void UAutomaticWeaponComponent::PostEditChangeProperty(struct FPropertyChangedEv
 
 void UAutomaticWeaponComponent::CacheFirePressed()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::White, TEXT("PRESSED"));
 	bShouldFire = true;
 }
 
 void UAutomaticWeaponComponent::CacheFireReleased()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::White, TEXT("RELEASED"));
 	bShouldFire = false;
 }
 
-void UAutomaticWeaponComponent::Fire()
+
+void UAutomaticWeaponComponent::Fire() const
 {
 	ensureMsgf(Character->GetController(), TEXT("Character->GetController() == nullptr"));
 	AController* const CharacterController = Character->GetController();
+
+	ensureMsgf(GetWorld(), TEXT("World != nullptr"));
 	UWorld* const World = GetWorld();
 
-	ensureMsgf(ProjectileClass, TEXT("ProjectileClass != nullptr"));
-	ensureMsgf(World, TEXT("World != nullptr"));
+	SpawnProjectile(CharacterController, World);
 
-	APlayerController* PlayerController = Cast<APlayerController>(CharacterController);
+	ManageFX();
+}
 
-	const FRotator SpawnRotation = PlayerController->PlayerCameraManager->GetCameraRotation();
-	// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
-	const FVector SpawnLocation = GetOwner()->GetActorLocation() + SpawnRotation.RotateVector(MuzzleOffset);
-
-	//Set Spawn Collision Handling Override
-	FActorSpawnParameters ActorSpawnParams;
-	ActorSpawnParams.SpawnCollisionHandlingOverride =
-		ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
-
-	// Spawn the projectile at the muzzle
-	World->SpawnActor<AZombieProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, ActorSpawnParams);
-	DrawDebugSphere(GetWorld(), SpawnLocation, 8.f, 12, FColor::Red, false, 1.f);
-
-
-	// Try and play the sound if specified
+void UAutomaticWeaponComponent::ManageFX() const
+{
 	if (FireSound != nullptr)
 	{
 		UGameplayStatics::PlaySoundAtLocation(this, FireSound, Character->GetActorLocation());
@@ -135,4 +123,17 @@ void UAutomaticWeaponComponent::Fire()
 			AnimInstance->Montage_Play(FireAnimation, 1.f);
 		}
 	}
+}
+
+void UAutomaticWeaponComponent::SpawnProjectile(AController* const CharacterController, UWorld* const World) const
+{
+	const APlayerController* PlayerController = Cast<APlayerController>(CharacterController);
+	const FRotator SpawnRotation = PlayerController->PlayerCameraManager->GetCameraRotation();
+	const FVector SpawnLocation = GetOwner()->GetActorLocation() + SpawnRotation.RotateVector(MuzzleOffset);
+
+	FActorSpawnParameters ActorSpawnParams;
+	ActorSpawnParams.SpawnCollisionHandlingOverride =
+		ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
+	ensureMsgf(ProjectileClass, TEXT("ProjectileClass != nullptr"));
+	World->SpawnActor<AZombieProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, ActorSpawnParams);
 }

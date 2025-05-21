@@ -55,7 +55,9 @@ public:
 
 
 private:
+	void Fire() const;
 	void CacheFirePressed();
 	void CacheFireReleased();
-	void Fire();
+	void SpawnProjectile(AController* CharacterController, UWorld* World) const;
+	void ManageFX() const;
 };
