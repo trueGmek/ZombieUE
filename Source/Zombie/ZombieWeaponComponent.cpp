@@ -37,6 +37,7 @@ void UZombieWeaponComponent::Fire()
 			APlayerController* PlayerController = Cast<APlayerController>(Character->GetController());
 			const FRotator SpawnRotation = PlayerController->PlayerCameraManager->GetCameraRotation();
 			// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
+			GLog->Log("Owner name: " + GetOwner()->GetName());
 			const FVector SpawnLocation = GetOwner()->GetActorLocation() + SpawnRotation.RotateVector(MuzzleOffset);
 	
 			//Set Spawn Collision Handling Override
@@ -78,7 +79,9 @@ bool UZombieWeaponComponent::AttachWeapon(AZombieCharacter* TargetCharacter)
 
 	// Attach the weapon to the First Person Character
 	FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, true);
+	GLog->Log("Owner before attaching: " + GetOwner()->GetName());
 	AttachToComponent(Character->GetMesh1P(), AttachmentRules, FName(TEXT("GripPoint")));
+	GLog->Log("Owner after attaching: " + GetOwner()->GetName());
 
 	// Set up action bindings
 	if (APlayerController* PlayerController = Cast<APlayerController>(Character->GetController()))
@@ -116,4 +119,11 @@ void UZombieWeaponComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 
 	// maintain the EndPlay call chain
 	Super::EndPlay(EndPlayReason);
+}
+
+void UZombieWeaponComponent::BeginPlay()
+{
+	Super::BeginPlay();
+	GLog->Log("[ZombieWeaponComponent] Owner on begin play: " + GetOwner()->GetName());
+	GLog->Log("[ZombieWeaponComponent] GetPathName on begin play: " + GetPathName());
 }
