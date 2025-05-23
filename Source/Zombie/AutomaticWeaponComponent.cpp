@@ -148,7 +148,7 @@ void UAutomaticWeaponComponent::HitScan(AController* const CharacterController) 
 	FVector EyeLocation;
 	FRotator EyeRotation;
 	CharacterController->GetActorEyesViewPoint(EyeLocation, EyeRotation);
-	const FVector End = EyeLocation + EyeRotation.Vector() * 1000;
+	const FVector End = EyeLocation + EyeRotation.Vector() * Range;
 
 	FHitResult HitResult{};
 	FCollisionQueryParams QueryParams;

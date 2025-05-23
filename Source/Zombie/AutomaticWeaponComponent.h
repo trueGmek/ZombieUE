@@ -43,6 +43,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Gameplay, meta=(AllowPrivateAccess = "true"))
 	EType Type{EType::Projectile};
 
+	// UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Gameplay)
+	float Range{5000};
+
 private:
 	APlayerCharacter* Character;
 
