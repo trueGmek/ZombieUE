@@ -154,7 +154,7 @@ void UAutomaticWeaponComponent::HitScan(AController* const CharacterController) 
 	FCollisionQueryParams QueryParams;
 	QueryParams.AddIgnoredActor(CharacterController);
 	QueryParams.bTraceComplex = true;
-	bool bHit = GetWorld()->LineTraceSingleByChannel(HitResult, EyeLocation, End, ECC_Visibility, QueryParams);
+	bool bHit = GetWorld()->LineTraceSingleByChannel(HitResult, EyeLocation, End, ECC_GameTraceChannel1, QueryParams);
 
 	if (bHit)
 	{
