@@ -1,7 +1,7 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "ZombieGameMode.h"
-#include "ZombieCharacter.h"
+#include "PlayerCharacter.h"
 #include "UObject/ConstructorHelpers.h"
 
 AZombieGameMode::AZombieGameMode()

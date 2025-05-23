@@ -3,7 +3,7 @@
 #include "AutomaticWeaponComponent.generated.h"
 
 class UInputMappingContext;
-class AZombieCharacter;
+class APlayerCharacter;
 class UInputAction;
 
 UENUM()
@@ -44,7 +44,7 @@ public:
 	EType Type{EType::Projectile};
 
 private:
-	AZombieCharacter* Character;
+	APlayerCharacter* Character;
 
 	bool bShouldFire{false};
 	float LastFireTime{0};
@@ -52,7 +52,7 @@ private:
 public:
 	void BindInputs();
 	UFUNCTION(BlueprintCallable, Category="Weapons")
-	bool AttachWeaponToPlayer(AZombieCharacter* TargetCharacter);
+	bool AttachWeaponToPlayer(APlayerCharacter* TargetCharacter);
 
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType,
 	                           FActorComponentTickFunction* ThisTickFunction) override;

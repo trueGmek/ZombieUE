@@ -2,7 +2,7 @@
 
 
 #include "ZombieWeaponComponent.h"
-#include "ZombieCharacter.h"
+#include "PlayerCharacter.h"
 #include "ZombieProjectile.h"
 #include "GameFramework/PlayerController.h"
 #include "Camera/PlayerCameraManager.h"
@@ -67,7 +67,7 @@ void UZombieWeaponComponent::Fire()
 	}
 }
 
-bool UZombieWeaponComponent::AttachWeapon(AZombieCharacter* TargetCharacter)
+bool UZombieWeaponComponent::AttachWeapon(APlayerCharacter* TargetCharacter)
 {
 	Character = TargetCharacter;
 

@@ -2,14 +2,14 @@
 
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
-#include "ZombieCharacter.h"
+#include "PlayerCharacter.h"
 #include "ZombieProjectile.h"
 #include "Kismet/GameplayStatics.h"
 
 #include "DrawDebugHelpers.h"
 
 
-bool UAutomaticWeaponComponent::AttachWeaponToPlayer(AZombieCharacter* TargetCharacter)
+bool UAutomaticWeaponComponent::AttachWeaponToPlayer(APlayerCharacter* TargetCharacter)
 {
 	Character = TargetCharacter;
 

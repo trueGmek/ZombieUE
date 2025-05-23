@@ -19,7 +19,7 @@ void UZombiePickUpComponent::BeginPlay()
 void UZombiePickUpComponent::OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	// Checking if it is a First Person Character overlapping
-	AZombieCharacter* Character = Cast<AZombieCharacter>(OtherActor);
+	APlayerCharacter* Character = Cast<APlayerCharacter>(OtherActor);
 	if(Character != nullptr)
 	{
 		// Notify that the actor is being picked up

@@ -1,6 +1,6 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
-#include "ZombieCharacter.h"
+#include "PlayerCharacter.h"
 #include "ZombieProjectile.h"
 #include "Animation/AnimInstance.h"
 #include "Camera/CameraComponent.h"
@@ -14,9 +14,9 @@
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
 //////////////////////////////////////////////////////////////////////////
-// AZombieCharacter
+// APlayerCharacter
 
-AZombieCharacter::AZombieCharacter()
+APlayerCharacter::APlayerCharacter()
 {
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(55.f, 96.0f);
@@ -39,7 +39,7 @@ AZombieCharacter::AZombieCharacter()
 
 //////////////////////////////////////////////////////////////////////////// Input
 
-void AZombieCharacter::NotifyControllerChanged()
+void APlayerCharacter::NotifyControllerChanged()
 {
 	Super::NotifyControllerChanged();
 
@@ -53,7 +53,7 @@ void AZombieCharacter::NotifyControllerChanged()
 	}
 }
 
-void AZombieCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {	
 	// Set up action bindings
 	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent))
@@ -63,10 +63,10 @@ void AZombieCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
 
 		// Moving
-		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AZombieCharacter::Move);
+		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &APlayerCharacter::Move);
 
 		// Looking
-		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AZombieCharacter::Look);
+		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &APlayerCharacter::Look);
 	}
 	else
 	{
@@ -75,7 +75,7 @@ void AZombieCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 }
 
 
-void AZombieCharacter::Move(const FInputActionValue& Value)
+void APlayerCharacter::Move(const FInputActionValue& Value)
 {
 	// input is a Vector2D
 	FVector2D MovementVector = Value.Get<FVector2D>();
@@ -88,7 +88,7 @@ void AZombieCharacter::Move(const FInputActionValue& Value)
 	}
 }
 
-void AZombieCharacter::Look(const FInputActionValue& Value)
+void APlayerCharacter::Look(const FInputActionValue& Value)
 {
 	// input is a Vector2D
 	FVector2D LookAxisVector = Value.Get<FVector2D>();
