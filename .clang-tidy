@@ -1,0 +1,14 @@
+# clang-analyzer-*,bugprone-*,performance-*,portability-*,modernize-*,
+# readability-*,misc-*,-readability-magic-numbers
+
+Checks: >
+  readability-*,
+
+
+CheckOptions:
+  - key:             readability/IdentifierNaming.IgnoreMainLikeFunctions
+    value:           true
+  - key:             readability/IdentifierNaming.VariableCase
+    value:           CamelCase
+  - key:             readability/IdentifierNaming.FunctionCase
+    value:           CamelCase
