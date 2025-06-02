@@ -3,32 +3,57 @@
 #include "ZombieAIController.h"
 
 #include "AIController.h"
+#include "BehaviorTree/BlackboardComponent.h"
 #include "Containers/UnrealString.h"
 #include "Engine/Engine.h"
 #include "HAL/Platform.h"
+#include "TimerManager.h"
+#include "Utils/LogUtils.h"
 #include "ZombieCharacter.h"
 
 AZombieAIController::AZombieAIController() {
   AIperceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("AI Sight"));
+  AIperceptionComponent->OnTargetPerceptionUpdated.AddDynamic(this, &AZombieAIController::UpdatePerception);
 }
 
 void AZombieAIController::BeginPlay() {
-  GEngine->AddOnScreenDebugMessage(-1, 5.0F, FColor::Red, FString("BeginPlay"));
+  Super::BeginPlay();
+  LogUtils::LogToScreen(FString("Begin play"), GEngine);
+  BlackboardComponent = GetBlackboardComponent();
 }
 
-void AZombieAIController::OnPossess(APawn *InPawn) {
+void AZombieAIController::UpdatePerception(AActor* Actor, FAIStimulus Stimulus) {
+  if (Actor != nullptr && Actor->ActorHasTag("Player") && Stimulus.WasSuccessfullySensed()) {
+
+    LogUtils::LogToScreen(FString("Saw a player"), GEngine);
+    GetWorldTimerManager().ClearTimer(SeenPlayerTimerHandle);
+    BlackboardComponent->SetValueAsObject(EnemyBlackboardKey, Actor);
+    BlackboardComponent->SetValueAsBool(LOSBlackboardKey, true);
+
+  } else {
+
+    BlackboardComponent->SetValueAsBool(LOSBlackboardKey, false);
+    GetWorldTimerManager().SetTimer(SeenPlayerTimerHandle, this, &AZombieAIController::LoseEnemyReference,
+                                    FollowAfterLosingSightPeriod, false);
+  }
+}
+
+void AZombieAIController::LoseEnemyReference() const {
+  LogUtils::LogToScreen(FString("LoseEnemyReference called"), GEngine);
+  BlackboardComponent->SetValueAsObject(EnemyBlackboardKey, nullptr);
+}
+
+void AZombieAIController::OnPossess(APawn* InPawn) {
   Super::OnPossess(InPawn);
+  LogUtils::LogToScreen(FString("OnPossess"), GEngine);
 
-  auto *zombieCharacter = Cast<AZombieCharacter>(InPawn);
+  auto* zombieCharacter = Cast<AZombieCharacter>(InPawn);
 
-  if (zombieCharacter == nullptr)
+  if (zombieCharacter == nullptr) {
     return;
-  
+  }
+
   ensureMsgf(BehaviorTree, TEXT("Behaviour tree is not set"));
   bool bIsRunning = RunBehaviorTree(BehaviorTree);
   ensureMsgf(bIsRunning, TEXT("The behaviour tree is not running"));
-
-  GEngine->AddOnScreenDebugMessage(-1, 5.0F, FColor::Red,
-                                   FString("RunBehaviorTree resulted with: ") +
-                                       FString(bIsRunning ? "true" : "false"));
 }
