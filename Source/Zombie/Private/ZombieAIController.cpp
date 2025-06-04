@@ -8,7 +8,6 @@
 #include "Engine/Engine.h"
 #include "HAL/Platform.h"
 #include "TimerManager.h"
-#include "Utils/LogUtils.h"
 #include "ZombieCharacter.h"
 
 AZombieAIController::AZombieAIController() {
@@ -18,20 +17,17 @@ AZombieAIController::AZombieAIController() {
 
 void AZombieAIController::BeginPlay() {
   Super::BeginPlay();
-  LogUtils::LogToScreen(FString("Begin play"), GEngine);
   BlackboardComponent = GetBlackboardComponent();
 }
 
 void AZombieAIController::UpdatePerception(AActor* Actor, FAIStimulus Stimulus) {
   if (Actor != nullptr && Actor->ActorHasTag("Player") && Stimulus.WasSuccessfullySensed()) {
 
-    LogUtils::LogToScreen(FString("Saw a player"), GEngine);
     GetWorldTimerManager().ClearTimer(SeenPlayerTimerHandle);
     BlackboardComponent->SetValueAsObject(EnemyBlackboardKey, Actor);
     BlackboardComponent->SetValueAsBool(LOSBlackboardKey, true);
 
   } else {
-
     BlackboardComponent->SetValueAsBool(LOSBlackboardKey, false);
     GetWorldTimerManager().SetTimer(SeenPlayerTimerHandle, this, &AZombieAIController::LoseEnemyReference,
                                     FollowAfterLosingSightPeriod, false);
@@ -39,13 +35,11 @@ void AZombieAIController::UpdatePerception(AActor* Actor, FAIStimulus Stimulus) 
 }
 
 void AZombieAIController::LoseEnemyReference() const {
-  LogUtils::LogToScreen(FString("LoseEnemyReference called"), GEngine);
   BlackboardComponent->SetValueAsObject(EnemyBlackboardKey, nullptr);
 }
 
 void AZombieAIController::OnPossess(APawn* InPawn) {
   Super::OnPossess(InPawn);
-  LogUtils::LogToScreen(FString("OnPossess"), GEngine);
 
   auto* zombieCharacter = Cast<AZombieCharacter>(InPawn);
 

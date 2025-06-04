@@ -12,6 +12,14 @@
 				"Engine",
 				"AIModule"
 			]
+		},
+		{
+			"Name": "Combat",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Engine"
+			]
 		}
 	],
 	"Plugins": [
