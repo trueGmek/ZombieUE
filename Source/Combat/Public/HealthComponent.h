@@ -5,8 +5,8 @@
 #include "CoreMinimal.h"
 #include "HealthComponent.generated.h"
 
-DECLARE_DELEGATE_OneParam(OnHealthChanged, float);
-DECLARE_DELEGATE(OnDeath);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnDeathDelegate);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnHealthChangedDelegate, float, CurrentHealth);
 
 UCLASS(ClassGroup = (Health), meta = (BlueprintSpawnableComponent))
 class COMBAT_API UHealthComponent : public UActorComponent {
@@ -20,7 +20,6 @@ public:
 
 protected:
   virtual void BeginPlay() override;
-  virtual void DebugDelegate(float CurrentHealth);
 
 public:
   UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "Health")
@@ -29,6 +28,6 @@ public:
   UPROPERTY(EditAnywhere, Category = "Health")
   float MaxHealth{300};
 
-  OnHealthChanged OnHealthChangedDelegate;
-  OnDeath OnDeathDelegate;
+  FOnHealthChangedDelegate OnHealthChanged;
+  FOnDeathDelegate OnDeath;
 };

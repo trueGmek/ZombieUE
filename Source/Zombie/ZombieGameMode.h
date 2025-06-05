@@ -7,13 +7,9 @@
 #include "ZombieGameMode.generated.h"
 
 UCLASS(minimalapi)
-class AZombieGameMode : public AGameModeBase
-{
-	GENERATED_BODY()
+class AZombieGameMode : public AGameModeBase {
+  GENERATED_BODY()
 
 public:
-	AZombieGameMode();
+  AZombieGameMode();
 };
-
-
-
