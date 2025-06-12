@@ -10,7 +10,6 @@ UBTT_Log::UBTT_Log() {
 }
 
 EBTNodeResult::Type UBTT_Log::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) {
-
   if (OwnerComp.GetAIOwner() == nullptr) {
     return EBTNodeResult::Failed;
   }

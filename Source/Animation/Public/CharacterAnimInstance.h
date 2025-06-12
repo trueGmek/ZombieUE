@@ -1,0 +1,18 @@
+#pragma once
+
+#include "Animation/AnimInstance.h"
+#include "CoreMinimal.h"
+
+#include "CharacterAnimInstance.generated.h"
+
+/**
+ * Base class for any animation instances of characters in the game
+ */
+UCLASS()
+class ANIMATION_API UCharacterAnimInstance : public UAnimInstance {
+  GENERATED_BODY()
+
+public:
+  UPROPERTY(BlueprintReadWrite, EditAnywhere)
+  bool bIsHit;
+};

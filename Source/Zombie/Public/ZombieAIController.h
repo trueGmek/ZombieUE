@@ -1,6 +1,7 @@
 #pragma once
 
 #include "AIController.h"
+#include "BehaviorTree/BehaviorTreeTypes.h"
 #include "CoreMinimal.h"
 #include "Perception/AIPerceptionComponent.h"
 
@@ -31,6 +32,9 @@ public:
   UPROPERTY(EditDefaultsOnly, Category = "AI")
   FName LOSBlackboardKey{"HasLineOfSight"};
 
+  UPROPERTY(EditDefaultsOnly, Category = "AI")
+  FName IsHitBlackboardKey{"IsHit"};
+
   AZombieAIController();
 
 protected:
@@ -42,6 +46,9 @@ protected:
 private:
   UFUNCTION()
   void UpdatePerception(AActor* Actor, FAIStimulus Stimulus);
+
+  UFUNCTION()
+  void HandleTakeAnyDamage();
 
   void LoseEnemyReference() const;
 };

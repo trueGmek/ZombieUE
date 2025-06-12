@@ -4,7 +4,6 @@
 
 #include "AIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
-#include "Containers/UnrealString.h"
 #include "Engine/Engine.h"
 #include "HAL/Platform.h"
 #include "TimerManager.h"
@@ -50,4 +49,10 @@ void AZombieAIController::OnPossess(APawn* InPawn) {
   ensureMsgf(BehaviorTree, TEXT("Behaviour tree is not set"));
   bool bIsRunning = RunBehaviorTree(BehaviorTree);
   ensureMsgf(bIsRunning, TEXT("The behaviour tree is not running"));
+
+  zombieCharacter->OnTakeDamage.AddDynamic(this, &AZombieAIController::HandleTakeAnyDamage);
+}
+
+void AZombieAIController::HandleTakeAnyDamage() {
+  BlackboardComponent->SetValueAsBool(IsHitBlackboardKey, true);
 }
