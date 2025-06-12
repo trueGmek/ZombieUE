@@ -10,6 +10,10 @@ void UAnimNotifyState_Progress::NotifyBegin(USkeletalMeshComponent* MeshComp,
                                             float TotalDuration,
                                             const FAnimNotifyEventReference& EventReference) {
 
+  if (MeshComp->GetOwner() == nullptr) {
+    return;
+  }
+
   AnimationProgressComponent = MeshComp->GetOwner()->GetComponentByClass<UAnimationProgressComponent>();
   elapsedTime = 0.0F;
 
@@ -26,7 +30,6 @@ void UAnimNotifyState_Progress::NotifyTick(USkeletalMeshComponent* MeshComp,
                                            UAnimSequenceBase* Animation,
                                            float FrameDeltaTime,
                                            const FAnimNotifyEventReference& EventReference) {
-
   elapsedTime += FrameDeltaTime;
   if (AnimationProgressComponent == nullptr) {
     return;
