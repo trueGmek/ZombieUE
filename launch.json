@@ -1,0 +1,23 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch Unreal Editor (Debug)",
+            "type": "lldb-dap",
+            "request": "launch",
+            "program": "/home/gmek/Dev/UnrealEngine/Zombie/Binaries/Linux/UnrealGame-Linux-DebugGame",
+            "args": [ ],
+            "cwd": "/home/gmek/UnrealEngine", 
+            "stopOnEntry": false,
+            "runInTerminal": true
+        },
+        {
+            "name": "Attach to Unreal Editor (Debug)",
+            "type": "lldb-dap",
+            "request": "attach",
+            "program": "/home/gmek/UnrealEngine/Engine/Binaries/Linux/UE5Editor", // <-- Adjust this path
+            "pid": "${command:pickProcess}",
+            "cwd": "/home/gmek/UnrealEngine/Engine/Binaries/Linux/" // <-- Adjust this path
+        }
+    ]
+}
