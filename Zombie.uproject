@@ -11,7 +11,8 @@
 			"AdditionalDependencies": [
 				"Engine",
 				"AIModule",
-				"Animation"
+				"Animation",
+				"NavigationSystem"
 			]
 		},
 		{
