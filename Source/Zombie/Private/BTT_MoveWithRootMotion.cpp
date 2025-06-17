@@ -76,10 +76,10 @@ void UBTT_MoveWithRootMotion::TickTask(UBehaviorTreeComponent& OwnerComp, uint8*
 
   const FVector CurrentLocation = ZombieCharacter->GetActorLocation();
   const FVector FinalDestination = CurrentPath->PathPoints.Last();
-  const FVector ProjCurrentLocation =
-      UKismetMathLibrary::ProjectVectorOnToPlane(CurrentLocation, FVector::UpVector);
+  const FVector ProjCurrentLocation = UKismetMathLibrary::ProjectVectorOnToPlane(CurrentLocation, FVector::UpVector);
 
-  if (FVector::DistSquared(ProjCurrentLocation, FinalDestination) < FMath::Square(AcceptanceRange.GetValue(Blackboard))) {
+  if (FVector::DistSquared(ProjCurrentLocation, FinalDestination) <
+      FMath::Square(AcceptanceRange.GetValue(Blackboard))) {
     FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
     return;
   }
@@ -89,7 +89,6 @@ void UBTT_MoveWithRootMotion::TickTask(UBehaviorTreeComponent& OwnerComp, uint8*
   if (FVector::DistSquared(ProjCurrentLocation, TargetPoint) < FMath::Square(NextPointRadius.GetValue(Blackboard))) {
     PathPointIndex++;
     if (PathPointIndex >= CurrentPath->PathPoints.Num()) {
-      // This case should be caught by the final destination check, but as a fallback
       FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
       return;
     }

@@ -19,4 +19,13 @@ public:
 
   UPROPERTY(BlueprintReadWrite, EditAnywhere)
   bool bShouldRun;
+
+  UPROPERTY(BlueprintReadWrite, EditAnywhere)
+  bool bIsAttacking;
+
+  UPROPERTY(BlueprintReadWrite, EditAnywhere)
+  bool bIsDying;
+
+  UPROPERTY(BlueprintReadWrite, EditAnywhere)
+  bool bIsScreaming;
 };

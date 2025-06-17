@@ -67,5 +67,5 @@ public:
   void OnTaskFinished(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, EBTNodeResult::Type TaskResult) override;
 
 private:
- UNavigationPath* GetPathToDestination(UBehaviorTreeComponent& OwnerComp, FVector CurrentPosition);
+  UNavigationPath* GetPathToDestination(UBehaviorTreeComponent& OwnerComp, FVector CurrentPosition);
 };
