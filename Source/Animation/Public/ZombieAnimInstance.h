@@ -28,4 +28,7 @@ public:
 
   UPROPERTY(BlueprintReadWrite, EditAnywhere)
   bool bIsScreaming;
+
+  UPROPERTY(BlueprintReadWrite, EditAnywhere)
+  bool bIsFeeding;
 };
