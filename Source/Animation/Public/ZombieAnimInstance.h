@@ -6,7 +6,17 @@
 
 #include "ZombieAnimInstance.generated.h"
 
-/**
+UENUM(BlueprintType)
+enum class EZombieAnimKeys : uint8 {
+  GetHit UMETA(DisplayName = "Get Hit"),
+  ShouldWalk UMETA(DisplayName = "Should Walk"),
+  ShouldRun UMETA(DisplayName = "Should Run"),
+  IsAttacking UMETA(DisplayName = "Is Attacking"),
+  IsScreaming UMETA(DisplayName = "Is Screaming"),
+  IsFeeding UMETA(DisplayName = "Is Feeding"),
+};
+
+/*
  *
  */
 UCLASS()

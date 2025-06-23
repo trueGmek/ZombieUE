@@ -5,6 +5,11 @@
 
 #include "CharacterAnimInstance.generated.h"
 
+UENUM(BlueprintType)
+enum class ECharacterAnimKeys : uint8 {
+  GetHit UMETA(DisplayName = "Get Hit"),
+};
+
 /**
  * Base class for any animation instances of characters in the game
  */
