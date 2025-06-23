@@ -2,6 +2,7 @@
 
 #include "Components/ActorComponent.h"
 #include "CoreMinimal.h"
+#include "UObject/ObjectMacros.h"
 
 #include "AnimationProgressComponent.generated.h"
 
@@ -12,7 +13,12 @@ class ANIMATION_API UAnimationProgressComponent : public UActorComponent {
 public:
   UAnimationProgressComponent();
 
+  UPROPERTY(BlueprintReadOnly)
   bool bInProgress{false};
+
+  UPROPERTY(BlueprintReadOnly)
   float Progress;
+
+  UPROPERTY(BlueprintReadOnly)
   float ElapsedTime{0};
 };

@@ -2,7 +2,7 @@
 # readability-*,misc-*,-readability-magic-numbers
 
 Checks: >
-  readability-*,
+  readability-*, -readability-identifier-length
 
 
 CheckOptions:
