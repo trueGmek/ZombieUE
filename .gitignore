@@ -75,3 +75,11 @@ DerivedDataCache/*
 
 #Cache files
 .cache
+
+# Jetbrains Rider personal-layer settings
+*.DotSettings.user
+.idea
+
+# Ignore compile commands
+compile_commands.json
+
