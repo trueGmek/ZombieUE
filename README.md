@@ -1,11 +1,12 @@
-<div align="center">
 
 # ZombieUE
+
+<div align="center">
 
 [![C++](https://img.shields.io/badge/C%2B%2B-00599C?style=for-the-badge&logo=cplusplus&logoColor=white)](https://isocpp.org/)
 [![UnrealEngine](https://img.shields.io/badge/Unreal_Engine-black?style=for-the-badge&logo=unrealengine&logoColor=white)](https://www.unrealengine.com/en-US/unreal-engine-5)
 
-
+</div>
 
 ZombieUE is a personal project for learning Unreal Engine 5, with a focus on building game AI. This repository serves as a sandbox to experiment with Unreal Engine features and gain hands-on experience with AI systems in a game development context.
 
