@@ -24,12 +24,10 @@ void UBTS_FindSmartObject::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* No
 
   AActor* Actor = OwnerComp.GetAIOwner()->GetPawn();
   FVector Extent = SearchBox.GetExtent();
-  FBox relativeBox = SearchBox.MoveTo(Actor->GetActorLocation());
+  FBox relativeBox = SearchBox.TransformBy(Actor->GetTransform());
   FSmartObjectRequest Request{relativeBox, RequestFilter};
-  DrawDebugBox(GetWorld(), relativeBox.GetCenter(), relativeBox.GetExtent(), Actor->GetActorRotation().Quaternion(),
-               FColor::Red);
+  DrawDebugBox(GetWorld(), relativeBox.GetCenter(), relativeBox.GetExtent(), FQuat::Identity, FColor::Red);
   FSmartObjectClaimHandle ClaimHandle = TryClaimingSmartObject(Request, Actor);
-
 
   UBlackboardComponent* BB = OwnerComp.GetAIOwner()->GetBlackboardComponent();
   if (ClaimHandle.IsValid()) {
@@ -39,30 +37,41 @@ void UBTS_FindSmartObject::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* No
 }
 
 FSmartObjectClaimHandle UBTS_FindSmartObject::TryClaimingSmartObject(FSmartObjectRequest& Request, AActor* Actor) {
-  USmartObjectSubsystem* SmartObjectSubsystem = GetWorld()->GetSubsystem<USmartObjectSubsystem>();
+  USmartObjectSubsystem* SOSubsystem = GetWorld()->GetSubsystem<USmartObjectSubsystem>();
 
-  FSmartObjectRequestResult Result = SmartObjectSubsystem->FindSmartObject(Request, Actor);
+  TArray<FSmartObjectRequestResult> Results{};
+  bool bSucceeded = SOSubsystem->FindSmartObjects(Request, Results, Actor);
 
-  if (!Result.IsValid()) {
+  if (!bSucceeded) {
     return {};
   }
 
   UE_LOG(LogTemp, Display, TEXT("FindSmartObjectRequestResult IS VALID"));
 
-  bool bCanBeCalimed = SmartObjectSubsystem->CanBeClaimed(Result.SlotHandle);
-  if (!bCanBeCalimed) {
-    return {};
+  for (auto RequestResult : Results) {
+
+    DrawDebugSphere(GetWorld(), SOSubsystem->GetSlotTransform(RequestResult)->GetLocation(), 10.0F, 10, FColor::Red,
+                    true);
+    bool bCanBeCalimed = SOSubsystem->CanBeClaimed(RequestResult.SlotHandle);
+    if (!bCanBeCalimed) {
+      continue;
+    }
+
+    UE_LOG(LogTemp, Display, TEXT("SmartObjectSlotHandle CAN BE CLAIMED"));
+
+    FSmartObjectClaimHandle ClaimHandle = SOSubsystem->MarkSlotAsClaimed(RequestResult.SlotHandle, ClaimPriority);
+
+    if (!ClaimHandle.IsValid()) {
+      continue;
+    }
+
+    UE_LOG(LogTemp, Display, TEXT("SmartObjectClaimHandle IS VALID"));
+
+    DrawDebugSphere(GetWorld(), SOSubsystem->GetSlotTransform(ClaimHandle)->GetLocation(), 10.0F, 10, FColor::Purple,
+                    true);
+
+    return ClaimHandle;
   }
 
-  UE_LOG(LogTemp, Display, TEXT("SmartObjectSlotHandle CAN BE CLAIMED"));
-
-  FSmartObjectClaimHandle ClaimHandle = SmartObjectSubsystem->MarkSlotAsClaimed(Result.SlotHandle, ClaimPriority);
-
-  if (!ClaimHandle.IsValid()) {
-    return {};
-  }
-
-  UE_LOG(LogTemp, Display, TEXT("SmartObjectClaimHandle IS VALID"));
-
-  return ClaimHandle;
+  return {};
 }

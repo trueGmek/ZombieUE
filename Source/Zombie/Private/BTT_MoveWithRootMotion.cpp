@@ -78,6 +78,8 @@ void UBTT_MoveWithRootMotion::TickTask(UBehaviorTreeComponent& OwnerComp, uint8*
   const FVector FinalDestination = CurrentPath->PathPoints.Last();
   const FVector ProjCurrentLocation = UKismetMathLibrary::ProjectVectorOnToPlane(CurrentLocation, FVector::UpVector);
 
+  DrawDebugSphere(GetWorld(), FinalDestination, 10.0F, 10, FColor::Green);
+
   if (FVector::DistSquared(ProjCurrentLocation, FinalDestination) <
       FMath::Square(AcceptanceRange.GetValue(Blackboard))) {
     FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
