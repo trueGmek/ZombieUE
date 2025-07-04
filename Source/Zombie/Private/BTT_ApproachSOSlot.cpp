@@ -3,6 +3,7 @@
 #include "BehaviorTree/BlackboardComponent.h"
 #include "BlackboardKeyType_SOClaimHandle.h"
 #include "Engine/World.h"
+#include "SmartObjectComponent.h"
 #include "SmartObjectRuntime.h"
 #include "SmartObjectSubsystem.h"
 
@@ -28,6 +29,9 @@ EBTNodeResult::Type UBTT_ApproachSOSlot::ExecuteTask(UBehaviorTreeComponent& Own
   }
   FTransform SOTransform = SOSubsystem->GetSlotTransform(ClaimHandle).GetValue();
   BlackboardComponent->SetValueAsVector(BlackboardKey.SelectedKeyName, SOTransform.GetLocation());
+
+  AActor* SOActor = SOSubsystem->GetSmartObjectComponent(ClaimHandle)->GetOwner();
+  BlackboardComponent->SetValueAsObject(SOActorKey, SOActor);
 
   return EBTNodeResult::Succeeded;
 }

@@ -13,13 +13,14 @@ class ZOMBIE_API UBTT_ApproachSOSlot : public UBTTask_BlackboardBase {
 public:
   UBTT_ApproachSOSlot();
 
-  // I would love to use FBlackboardKeySelector but I cannot figure out how to set a filter for it
-  UPROPERTY(BlueprintReadWrite, EditAnywhere)
+  UPROPERTY(EditAnywhere, Category = Blackboard)
   FName SOClaimedSlotKey;
+
+  UPROPERTY(EditAnywhere, Category = Blackboard)
+  FName SOActorKey;
 
 protected:
   virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
-
 
 private:
 };
