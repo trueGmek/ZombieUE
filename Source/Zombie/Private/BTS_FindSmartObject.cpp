@@ -32,7 +32,6 @@ void UBTS_FindSmartObject::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* No
   UBlackboardComponent* BB = OwnerComp.GetAIOwner()->GetBlackboardComponent();
   if (ClaimHandle.IsValid()) {
     BB->SetValue<UBlackboardKeyType_SOClaimHandle>(BlackboardKey.GetSelectedKeyID(), ClaimHandle);
-    UE_LOG(LogTemp, Display, TEXT("Set the claim handle to he BlackboardComponent"));
   }
 }
 
@@ -46,8 +45,6 @@ FSmartObjectClaimHandle UBTS_FindSmartObject::TryClaimingSmartObject(FSmartObjec
     return {};
   }
 
-  UE_LOG(LogTemp, Display, TEXT("FindSmartObjectRequestResult IS VALID"));
-
   for (auto RequestResult : Results) {
 
     DrawDebugSphere(GetWorld(), SOSubsystem->GetSlotTransform(RequestResult)->GetLocation(), 10.0F, 10, FColor::Red,
@@ -57,15 +54,11 @@ FSmartObjectClaimHandle UBTS_FindSmartObject::TryClaimingSmartObject(FSmartObjec
       continue;
     }
 
-    UE_LOG(LogTemp, Display, TEXT("SmartObjectSlotHandle CAN BE CLAIMED"));
-
     FSmartObjectClaimHandle ClaimHandle = SOSubsystem->MarkSlotAsClaimed(RequestResult.SlotHandle, ClaimPriority);
 
     if (!ClaimHandle.IsValid()) {
       continue;
     }
-
-    UE_LOG(LogTemp, Display, TEXT("SmartObjectClaimHandle IS VALID"));
 
     DrawDebugSphere(GetWorld(), SOSubsystem->GetSlotTransform(ClaimHandle)->GetLocation(), 10.0F, 10, FColor::Purple,
                     true);

@@ -15,6 +15,7 @@ EBTNodeResult::Type UBTT_UseSmartObject::ExecuteTask(UBehaviorTreeComponent& Own
   ensureMsgf(BBComponent, TEXT("BBComponent is a nullptr"));
 
   FSmartObjectClaimHandle ClaimHandle = BBComponent->GetValue<UBlackboardKeyType_SOClaimHandle>(SOClaimHandleKey);
+  
 
   return EBTNodeResult::InProgress;
 }
