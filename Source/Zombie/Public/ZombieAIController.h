@@ -1,6 +1,7 @@
 #pragma once
 
 #include "AIController.h"
+#include "BehaviorTree/BehaviorTree.h"
 #include "BehaviorTree/BehaviorTreeTypes.h"
 #include "CoreMinimal.h"
 #include "Perception/AIPerceptionComponent.h"
@@ -16,6 +17,9 @@ class ZOMBIE_API AZombieAIController : public AAIController {
 public:
   UPROPERTY(EditDefaultsOnly, Category = "AI")
   UBehaviorTree* BehaviorTree;
+
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
+  TObjectPtr<UBehaviorTree> ChaseBehaviorTree;
 
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AI")
   UAIPerceptionComponent* AIperceptionComponent;
@@ -35,13 +39,19 @@ public:
   UPROPERTY(EditDefaultsOnly, Category = "AI")
   FName IsHitBlackboardKey{"IsHit"};
 
-  AZombieAIController();
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
+  FGameplayTag ChaseInjectionTag;
 
 protected:
   FTimerHandle SeenPlayerTimerHandle;
 
+public:
+  AZombieAIController();
+
+protected:
   void OnPossess(APawn* InPawn) override;
   void BeginPlay() override;
+  virtual void SetUpBehaviorTree();
 
 private:
   UFUNCTION()

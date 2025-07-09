@@ -4,7 +4,6 @@
 
 #include "AIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
-#include "Engine/Engine.h"
 #include "HAL/Platform.h"
 #include "TimerManager.h"
 #include "ZombieCharacter.h"
@@ -47,10 +46,19 @@ void AZombieAIController::OnPossess(APawn* InPawn) {
   }
 
   ensureMsgf(BehaviorTree, TEXT("Behaviour tree is not set"));
+  SetUpBehaviorTree();
+  zombieCharacter->OnTakeDamage.AddDynamic(this, &AZombieAIController::HandleTakeAnyDamage);
+}
+
+void AZombieAIController::SetUpBehaviorTree() {
   bool bIsRunning = RunBehaviorTree(BehaviorTree);
   ensureMsgf(bIsRunning, TEXT("The behaviour tree is not running"));
 
-  zombieCharacter->OnTakeDamage.AddDynamic(this, &AZombieAIController::HandleTakeAnyDamage);
+  UBehaviorTreeComponent* BTComponent = Cast<UBehaviorTreeComponent>(GetBrainComponent());
+  ensureMsgf(BTComponent, TEXT("BTComponent is nullptr"));
+  ensureMsgf(ChaseInjectionTag.IsValid(), TEXT("ChaseInjectionTag is not valid"));
+  ensureMsgf(ChaseBehaviorTree.Get(), TEXT("ChaseBehaviorTree is not set!"));
+  BTComponent->SetDynamicSubtree(ChaseInjectionTag, ChaseBehaviorTree.Get());
 }
 
 void AZombieAIController::HandleTakeAnyDamage() {

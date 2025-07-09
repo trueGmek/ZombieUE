@@ -34,6 +34,14 @@ To run or edit this project:
 
 - Typical dependencies required for Unreal Engine 5 projects (see Unreal Engine documentation for your OS).
 
+## Features
+
+- Root motion based movement
+- Multiple variations of the same agent.
+- Agents are able to recognize player as their enemy. They will approach the player on sight and try to attack them.
+- Zombies can play tount animation when they see their opponent.
+- Agents can interact with Smart Objectes in the scene.
+
 ## Author
 
 - **trueGmek** (solo developer and maintainer)
