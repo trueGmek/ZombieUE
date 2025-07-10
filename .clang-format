@@ -1,4 +1,6 @@
+BasedOnStyle: LLVM
 ColumnLimit: 120
 AllowShortFunctionsOnASingleLine: Empty
 PointerAlignment: Left
-BinPackParameters: OnePerLine
+AlignAfterOpenBracket: AlwaysBreak
+BinPackArguments: false
