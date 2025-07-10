@@ -18,18 +18,6 @@ AZombieAIController::AZombieAIController() {
 void AZombieAIController::BeginPlay() {
   Super::BeginPlay();
   BlackboardComponent = GetBlackboardComponent();
-
-#if WITH_GAMEPLAY_DEBUGGER
-  FZombieAIDebugger::RegisterActor(this);
-#endif
-}
-
-void AZombieAIController::EndPlay(EEndPlayReason::Type EndPlayReason) {
-#if WITH_GAMEPLAY_DEBUGGER
-  FZombieAIDebugger::UnregisterActor(this);
-#endif
-
-  Super::EndPlay(EndPlayReason);
 }
 
 void AZombieAIController::UpdatePerception(AActor* Actor, FAIStimulus Stimulus) {
@@ -41,8 +29,8 @@ void AZombieAIController::UpdatePerception(AActor* Actor, FAIStimulus Stimulus) 
 
   } else {
     BlackboardComponent->SetValueAsBool(LOSBlackboardKey, false);
-    GetWorldTimerManager().SetTimer(SeenPlayerTimerHandle, this, &AZombieAIController::LoseEnemyReference,
-                                    FollowAfterLosingSightPeriod, false);
+    GetWorldTimerManager().SetTimer(
+        SeenPlayerTimerHandle, this, &AZombieAIController::LoseEnemyReference, FollowAfterLosingSightPeriod, false);
   }
 }
 
