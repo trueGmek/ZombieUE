@@ -1,6 +1,14 @@
 # Visual Studio 2015 user specific files
 .vs/
 
+# Visual Studio Code user specific files
+.vscode/*
+!.vscode/launch.json
+*.code-workspace
+
+# Vim user specific files
+Session.vim
+
 # Compiled Object files
 *.slo
 *.lo

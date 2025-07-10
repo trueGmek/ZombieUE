@@ -1,0 +1,27 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch ZombieEditor (DebugGame) from lunch.json",
+            "request": "launch",
+            "program": "/home/gmek/UnrealEngine/Engine/Binaries/Linux/UnrealEditor-Linux-DebugGame",
+            "preLaunchTask": "ZombieEditor Linux DebugGame Build",
+            "args": [
+                "/home/gmek/Dev/UnrealEngine/ZombieUE/Zombie.uproject"
+            ],
+            "cwd": "/home/gmek/UnrealEngine",
+            "type": "lldb",
+            "visualizerFile": "/home/gmek/UnrealEngine/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+            "showDisplayString": true
+        },
+	{
+	      "name": "Attach to UnrealEditor",
+	      "type": "lldb",
+	      "request": "attach",
+	      "pid": "${command:pickProcess}",
+	      "stopOnEntry": false,
+	      "visualizerFile": "/home/gmek/UnrealEngine/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
+	      "showDisplayString": true
+	}
+    ]
+}   
