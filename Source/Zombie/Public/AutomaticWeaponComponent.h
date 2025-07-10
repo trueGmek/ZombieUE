@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Components/SkeletalMeshComponent.h"
+
 #include "AutomaticWeaponComponent.generated.h"
 
 class UInputMappingContext;

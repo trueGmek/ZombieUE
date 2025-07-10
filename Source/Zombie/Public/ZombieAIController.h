@@ -50,7 +50,8 @@ public:
 
 protected:
   void OnPossess(APawn* InPawn) override;
-  void BeginPlay() override;
+  virtual void BeginPlay() override;
+  virtual void EndPlay(EEndPlayReason::Type EndPlayReason) override;
   virtual void SetUpBehaviorTree();
 
 private:
