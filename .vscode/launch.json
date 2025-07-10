@@ -16,9 +16,10 @@
         },
 	{
 	      "name": "Attach to UnrealEditor",
-	      "type": "lldb",
+	      "type": "codelldb",
 	      "request": "attach",
 	      "pid": "${command:pickProcess}",
+              "program": "/home/gmek/UnrealEngine/Engine/Binaries/Linux/UnrealEditor-Linux-DebugGame",
 	      "stopOnEntry": false,
 	      "visualizerFile": "/home/gmek/UnrealEngine/Engine/Extras/VisualStudioDebugging/Unreal.natvis",
 	      "showDisplayString": true
