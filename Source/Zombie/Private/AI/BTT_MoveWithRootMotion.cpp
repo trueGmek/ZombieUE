@@ -50,22 +50,15 @@ EBTNodeResult::Type UBTT_MoveWithRootMotion::ExecuteTask(UBehaviorTreeComponent&
   ZombieCharacter = Cast<AZombieCharacter>(OwnerComp.GetAIOwner()->GetPawn());
   ensureMsgf(ZombieCharacter, TEXT("Owner is not of type AZombieCharacter"));
 
-  ZombieAnimInstance = Cast<UZombieAnimInstance>(ZombieCharacter->GetMesh()->GetAnimInstance());
-  ensureMsgf(ZombieAnimInstance, TEXT("The AnimInstance is not of type ZombieAnimInstance"));
-
-  CurrentPath = ZombieCharacter->RootMotionNavigationComponent->FindPath(Destination, Blackboard);
+  CurrentPath =
+      ZombieCharacter->RootMotionNavigationComponent->FindPathToBlackboardDestination(Destination, Blackboard);
 
   if (!CurrentPath || CurrentPath->PathPoints.Num() == 0) {
-    UE_LOG(LogTemp, Warning, TEXT("[%hs]: Generated path is null or has no PathPoints inside"), __PRETTY_FUNCTION__)
     return EBTNodeResult::Failed;
   }
 
   PathPointIndex = 0;
-  ZombieAnimInstance->bShouldWalk = this->MovementType == EMovementType::Walk;
-  ZombieAnimInstance->bShouldRun = this->MovementType == EMovementType::Run;
-
-  //TODO: SET IS USED TO FALSE AFTER FINISHING THIS TASK
-  ZombieCharacter->RootMotionNavigationComponent->SetIsUsed(true);
+  ZombieCharacter->RootMotionNavigationComponent->StartMovement(MovementType);
 
   return EBTNodeResult::InProgress;
 }
@@ -80,15 +73,20 @@ void UBTT_MoveWithRootMotion::TickTask(UBehaviorTreeComponent& OwnerComp, uint8*
   const FVector FinalDestination = CurrentPath->PathPoints.Last();
   const FVector ProjCurrentLocation = UKismetMathLibrary::ProjectVectorOnToPlane(CurrentLocation, FVector::UpVector);
 
-  if (FVector::DistSquared(ProjCurrentLocation, FinalDestination) <
-      FMath::Square(AcceptanceRange.GetValue(Blackboard))) {
+  if (FVector::DistSquared(CurrentLocation, FinalDestination) < FMath::Square(AcceptanceRange.GetValue(Blackboard))) {
     FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
     return;
   }
 
-  const FVector TargetPoint = CurrentPath->PathPoints[PathPointIndex];
+  const FVector TargetPoint{};
+  if (PathPointIndex >= CurrentPath->PathPoints.Num()) {
+    UE_LOG(LogTemp, Error, TEXT("TRYING TO CREACH OUTSIDE ARRAY BOUNDS"));
+    const FVector TargetPoint = CurrentPath->PathPoints[PathPointIndex - 1];
+  } else {
+    const FVector TargetPoint = CurrentPath->PathPoints[PathPointIndex];
+  }
 
-  if (FVector::DistSquared(ProjCurrentLocation, TargetPoint) < FMath::Square(NextPointRadius.GetValue(Blackboard))) {
+  if (FVector::DistSquared(CurrentLocation, TargetPoint) < FMath::Square(NextPointRadius.GetValue(Blackboard))) {
     PathPointIndex++;
     if (PathPointIndex >= CurrentPath->PathPoints.Num()) {
       FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
@@ -111,7 +109,7 @@ void UBTT_MoveWithRootMotion::OnTaskFinished(
     UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, EBTNodeResult::Type TaskResult) {
 
   UE_LOG(LogTemp, Display, TEXT("Stoping movement. Disabling the animation flags"));
-  ZombieAnimInstance->bShouldWalk = false;
-  ZombieAnimInstance->bShouldRun = false;
+
+  ZombieCharacter->RootMotionNavigationComponent->StopMovement();
   this->PathPointIndex = 0;
 }

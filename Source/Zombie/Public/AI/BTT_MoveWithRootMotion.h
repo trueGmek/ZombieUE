@@ -10,12 +10,6 @@
 
 #include "BTT_MoveWithRootMotion.generated.h"
 
-UENUM(BlueprintType)
-enum class EMovementType : uint8 {
-  Walk UMETA(DisplayName = "Walk"),
-  Run UMETA(DisplayName = "Run"),
-};
-
 /**
  * Custom BT Task to move an actor using Root Motion.
  * It requests a path, follows it, smoothly rotates the actor,
@@ -41,9 +35,6 @@ public:
 
   UPROPERTY(Category = Blackbaoard, EditAnywhere, meta = (ClampMin = "1", UIMin = "1"))
   FValueOrBBKey_Float NextPointRadius{50.0F};
-
-  UPROPERTY()
-  TObjectPtr<UZombieAnimInstance> ZombieAnimInstance;
 
   UPROPERTY()
   TObjectPtr<AZombieCharacter> ZombieCharacter;

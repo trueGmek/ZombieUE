@@ -1,11 +1,14 @@
 #include "ZombieCharacter.h"
 #include "CharacterAnimInstance.h"
+#include "Components/RootMotionNavigationComponent.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "HAL/Platform.h"
 
 AZombieCharacter::AZombieCharacter() {
   PrimaryActorTick.bCanEverTick = true;
   HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent"));
   AnimationProgressComponent = CreateDefaultSubobject<UAnimationProgressComponent>(TEXT("AnimationProgressComponent"));
+  RootMotionNavigationComponent = CreateDefaultSubobject<URootMotionNavigationComponent>(TEXT("RootMotionNavigationComponent"));
 }
 
 void AZombieCharacter::UpdateMovementSpeed(const float NewMaxWalkSpeed) {

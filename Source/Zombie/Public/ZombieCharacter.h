@@ -3,6 +3,7 @@
 #pragma once
 
 #include "AnimationProgressComponent.h"
+#include "Components/RootMotionNavigationComponent.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -21,6 +22,9 @@ public:
 
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = NPC, meta = (AllowPrivateAccess = "true"))
   TObjectPtr<UAnimationProgressComponent> AnimationProgressComponent;
+
+  UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = NPC, meta = (AllowPrivateAccess = "true"))
+  TObjectPtr<URootMotionNavigationComponent> RootMotionNavigationComponent;
 
   FOnTakeDamageDelegate OnTakeDamage;
 
