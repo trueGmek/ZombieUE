@@ -1,4 +1,4 @@
-#include "BTT_SetBBValue.h"
+#include "AI/BTT_SetBBValue.h"
 #include "AIController.h"
 #include "BehaviorTree/BehaviorTree.h"
 #include "BehaviorTree/Blackboard/BlackboardKeyType_Bool.h"

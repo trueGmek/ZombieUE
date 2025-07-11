@@ -1,4 +1,4 @@
-#include "BTT_SetSOData.h"
+#include "AI/BTT_SetSOData.h"
 #include "BehaviorTree/BehaviorTreeTypes.h"
 #include "BehaviorTree/Blackboard/BlackboardKeyType_Vector.h"
 #include "BehaviorTree/BlackboardComponent.h"

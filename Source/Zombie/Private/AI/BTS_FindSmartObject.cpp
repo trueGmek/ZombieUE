@@ -1,4 +1,4 @@
-#include "BTS_FindSmartObject.h"
+#include "AI/BTS_FindSmartObject.h"
 #include "AIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "BlackboardKeyType_SOClaimHandle.h"

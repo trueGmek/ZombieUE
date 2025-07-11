@@ -1,4 +1,4 @@
-#include "BTT_UseSmartObject.h"
+#include "AI/BTT_UseSmartObject.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "BlackboardKeyType_SOClaimHandle.h"
 #include "SmartObjectSubsystem.h"

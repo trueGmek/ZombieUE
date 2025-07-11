@@ -26,7 +26,7 @@ class ZOMBIE_API UBTT_MoveWithRootMotion : public UBTTaskNode {
 
   GENERATED_BODY()
 
-protected:
+public:
   UPROPERTY(EditAnywhere, Category = Blackboard)
   EMovementType MovementType;
 
