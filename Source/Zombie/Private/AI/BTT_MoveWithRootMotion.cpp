@@ -1,13 +1,17 @@
 #include "AI/BTT_MoveWithRootMotion.h"
 #include "AIController.h"
+#include "Animation/AnimData/AnimDataNotifications.h"
 #include "BehaviorTree/BehaviorTree.h"
 #include "BehaviorTree/BehaviorTreeTypes.h"
 #include "BehaviorTree/Blackboard/BlackboardKeyType_Object.h"
 #include "BehaviorTree/Blackboard/BlackboardKeyType_Vector.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "DrawDebugHelpers.h"
 #include "GameFramework/Actor.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Logging/LogVerbosity.h"
+#include "Math/MathFwd.h"
 #include "NavigationSystem.h"
 
 UBTT_MoveWithRootMotion::UBTT_MoveWithRootMotion() {
@@ -69,39 +73,42 @@ void UBTT_MoveWithRootMotion::TickTask(UBehaviorTreeComponent& OwnerComp, uint8*
     return;
   }
 
-  const FVector CurrentLocation = ZombieCharacter->GetActorLocation();
   const FVector FinalDestination = CurrentPath->PathPoints.Last();
-  const FVector ProjCurrentLocation = UKismetMathLibrary::ProjectVectorOnToPlane(CurrentLocation, FVector::UpVector);
 
-  if (FVector::DistSquared(CurrentLocation, FinalDestination) < FMath::Square(AcceptanceRange.GetValue(Blackboard))) {
+  FVector ProjCurrentLocation;
+  bool bWasPointProjected = ZombieCharacter->RootMotionNavigationComponent->ProjectPointToNavMesh(
+      ZombieCharacter->GetActorLocation(), ProjCurrentLocation);
+
+  if (!bWasPointProjected) {
+    FinishLatentTask(OwnerComp, EBTNodeResult::Failed);
+    UE_LOG(LogTemp, Error, TEXT("Couldn't project current position to Navigation Mesh"));
+    return;
+  }
+
+  if (FVector::DistSquared(ProjCurrentLocation, FinalDestination) <
+      FMath::Square(AcceptanceRange.GetValue(Blackboard))) {
     FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
     return;
   }
 
-  const FVector TargetPoint{};
-  if (PathPointIndex >= CurrentPath->PathPoints.Num()) {
-    UE_LOG(LogTemp, Error, TEXT("TRYING TO CREACH OUTSIDE ARRAY BOUNDS"));
-    const FVector TargetPoint = CurrentPath->PathPoints[PathPointIndex - 1];
-  } else {
-    const FVector TargetPoint = CurrentPath->PathPoints[PathPointIndex];
-  }
+  const FVector TargetPoint = CurrentPath->PathPoints[PathPointIndex];
 
-  if (FVector::DistSquared(CurrentLocation, TargetPoint) < FMath::Square(NextPointRadius.GetValue(Blackboard))) {
-    PathPointIndex++;
-    if (PathPointIndex >= CurrentPath->PathPoints.Num()) {
-      FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
-      return;
-    }
-  }
+  ManageRotation(ProjCurrentLocation, TargetPoint, DeltaSeconds);
 
-  // Smoothly rotate the actor to face the current target point
+  if (FVector::DistSquared(ProjCurrentLocation, TargetPoint) < FMath::Square(NextPointRadius.GetValue(Blackboard))) {
+    PathPointIndex = FMath::Clamp(++PathPointIndex, 0, CurrentPath->PathPoints.Num() - 1);
+  }
+}
+
+void UBTT_MoveWithRootMotion::ManageRotation(
+    const FVector CurrentLocation, const FVector NextPointLocation, const float DeltaSeconds) {
+
   const FRotator CurrentRotation = ZombieCharacter->GetActorRotation();
-  const FRotator TargetRotation =
-      UKismetMathLibrary::FindLookAtRotation(CurrentLocation, CurrentPath->PathPoints[PathPointIndex]);
+  const FRotator TargetRotation = UKismetMathLibrary::FindLookAtRotation(CurrentLocation, NextPointLocation);
+
   const FRotator NewRotation =
       FMath::RInterpTo(CurrentRotation, TargetRotation, DeltaSeconds, RotationSpeed.GetValue(Blackboard));
 
-  // Only update Yaw to prevent the character from tilting up/down
   ZombieCharacter->SetActorRotation(FRotator(0.F, NewRotation.Yaw, 0.F));
 }
 

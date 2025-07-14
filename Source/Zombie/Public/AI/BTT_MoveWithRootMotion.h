@@ -55,8 +55,9 @@ public:
   virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
   virtual void TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds) override;
   virtual void InitializeFromAsset(UBehaviorTree& Asset) override;
-  void OnTaskFinished(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, EBTNodeResult::Type TaskResult) override;
+  virtual void
+  OnTaskFinished(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, EBTNodeResult::Type TaskResult) override;
 
 private:
-  UNavigationPath* GetPathToDestination(UBehaviorTreeComponent& OwnerComp, FVector CurrentPosition);
+  void ManageRotation(FVector CurrentLocation, FVector NextPointLocation, float DeltaSeconds);
 };

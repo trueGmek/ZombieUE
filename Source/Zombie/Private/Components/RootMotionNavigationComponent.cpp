@@ -14,6 +14,7 @@ URootMotionNavigationComponent::URootMotionNavigationComponent() {}
 void URootMotionNavigationComponent::BeginPlay() {
 
   ZombieAnimInstance = Cast<UZombieAnimInstance>(GetOwner<ACharacter>()->GetMesh()->GetAnimInstance());
+  NavigationSystem = UNavigationSystemV1::GetNavigationSystem(GetWorld());
 
   if (ZombieAnimInstance == nullptr) {
     UE_LOG(LogTemp, Error, TEXT("ZombieAnimInstance reference is missing"));
@@ -64,6 +65,16 @@ URootMotionNavigationComponent::FindPathFromStartToActor(const FVector& StartPos
   CachedPath = path;
 
   return path;
+}
+
+bool URootMotionNavigationComponent::ProjectPointToNavMesh(FVector const& InPosition, FVector& OutPosition) {
+
+  FNavLocation projectedLocation{};
+  bool bResult = NavigationSystem->ProjectPointToNavigation(InPosition, projectedLocation, QueryExtent);
+
+  OutPosition = projectedLocation.Location;
+
+  return bResult;
 }
 
 void URootMotionNavigationComponent::StartMovement(EMovementType MovementType) {

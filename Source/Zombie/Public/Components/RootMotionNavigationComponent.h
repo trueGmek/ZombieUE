@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "Math/Vector.h"
 #include "NavigationPath.h"
+#include "NavigationSystem.h"
+#include "UObject/ObjectPtr.h"
 #include "Unix/UnixPlatform.h"
 #include "ZombieAnimInstance.h"
 
@@ -28,7 +30,13 @@ protected:
   TObjectPtr<UZombieAnimInstance> ZombieAnimInstance;
 
   UPROPERTY()
+  TObjectPtr<UNavigationSystemV1> NavigationSystem;
+
+  UPROPERTY()
   const UNavigationPath* CachedPath;
+
+  UPROPERTY(EditAnywhere, meta = (ToolTip = "Used in ProjectPointToNavMesh method"))
+  FVector QueryExtent{100, 100, 100};
 
   bool bIsUsed;
 
@@ -62,19 +70,28 @@ public:
   /*
    *
    */
+  // TODO: Documentation
   UFUNCTION()
-  UNavigationPath* FindPathToBlackboardDestination(const FBlackboardKeySelector& Destination, const UBlackboardComponent* BlackboardComponent);
+  UNavigationPath* FindPathToBlackboardDestination(
+      const FBlackboardKeySelector& Destination, const UBlackboardComponent* BlackboardComponent);
 
   /*
    * Starts the movement by setting animation flags
    */
   UFUNCTION()
   void StartMovement(EMovementType MovementType);
+
   /*
    * Stops the movement by setting animation flags
    */
   UFUNCTION()
   void StopMovement();
+
+  /*
+   * Finds
+   */
+  UFUNCTION()
+  bool ProjectPointToNavMesh(FVector const& Inposition, FVector& OutPosition);
 
   FORCEINLINE bool GetUsed() const {
     return bIsUsed;

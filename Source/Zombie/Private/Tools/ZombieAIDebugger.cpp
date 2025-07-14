@@ -47,6 +47,10 @@ void FZombieAIDebugger::CollectData(APlayerController* OwnerPC, AActor* DebugAct
 }
 
 FDebugData FZombieAIDebugger::FetchDebugData(AZombieCharacter& Character) {
+  if (Character.RootMotionNavigationComponent == nullptr || Character.HealthComponent == nullptr) {
+    return DefaultDebugData;
+  }
+
   return {
       Character.RootMotionNavigationComponent->GetUsed(),
       Character.HealthComponent->CurrentHealth,
