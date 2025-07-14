@@ -2,7 +2,6 @@
 #include "AIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "BlackboardKeyType_SOClaimHandle.h"
-#include "DrawDebugHelpers.h"
 #include "Engine/World.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Math/MathFwd.h"
@@ -16,8 +15,7 @@ UBTS_FindSmartObject::UBTS_FindSmartObject(const FObjectInitializer& ObjectIniti
 
   bTickIntervals = true;
 
-  // TODO: add filter for smart object handle
-  //  BlackboardKey.AddStringFilter(this, GET_MEMBER_NAME_CHECKED(UBTService_DefaultFocus, BlackboardKey));
+  // TODO: ADD FILTER FOR SMART OBJECT HANDLE
 }
 
 void UBTS_FindSmartObject::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds) {
@@ -26,7 +24,6 @@ void UBTS_FindSmartObject::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* No
   FVector Extent = SearchBox.GetExtent();
   FBox relativeBox = SearchBox.TransformBy(Actor->GetTransform());
   FSmartObjectRequest Request{relativeBox, RequestFilter};
-  DrawDebugBox(GetWorld(), relativeBox.GetCenter(), relativeBox.GetExtent(), FQuat::Identity, FColor::Red);
   FSmartObjectClaimHandle ClaimHandle = TryClaimingSmartObject(Request, Actor);
 
   UBlackboardComponent* BB = OwnerComp.GetAIOwner()->GetBlackboardComponent();
@@ -47,8 +44,6 @@ FSmartObjectClaimHandle UBTS_FindSmartObject::TryClaimingSmartObject(FSmartObjec
 
   for (auto RequestResult : Results) {
 
-    DrawDebugSphere(GetWorld(), SOSubsystem->GetSlotTransform(RequestResult)->GetLocation(), 10.0F, 10, FColor::Red,
-                    true);
     bool bCanBeCalimed = SOSubsystem->CanBeClaimed(RequestResult.SlotHandle);
     if (!bCanBeCalimed) {
       continue;
@@ -59,9 +54,6 @@ FSmartObjectClaimHandle UBTS_FindSmartObject::TryClaimingSmartObject(FSmartObjec
     if (!ClaimHandle.IsValid()) {
       continue;
     }
-
-    DrawDebugSphere(GetWorld(), SOSubsystem->GetSlotTransform(ClaimHandle)->GetLocation(), 10.0F, 10, FColor::Purple,
-                    true);
 
     return ClaimHandle;
   }
