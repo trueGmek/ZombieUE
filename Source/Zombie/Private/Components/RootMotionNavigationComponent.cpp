@@ -12,13 +12,11 @@
 URootMotionNavigationComponent::URootMotionNavigationComponent() {}
 
 void URootMotionNavigationComponent::BeginPlay() {
-
   ZombieAnimInstance = Cast<UZombieAnimInstance>(GetOwner<ACharacter>()->GetMesh()->GetAnimInstance());
   NavigationSystem = UNavigationSystemV1::GetNavigationSystem(GetWorld());
 
-  if (ZombieAnimInstance == nullptr) {
-    UE_LOG(LogTemp, Error, TEXT("ZombieAnimInstance reference is missing"));
-  }
+  ensureMsgf(ZombieAnimInstance, TEXT("ZombieAnimInstance reference is missing"));
+  ensureMsgf(NavigationSystem, TEXT("NavigationSystem is null"));
 }
 
 UNavigationPath* URootMotionNavigationComponent::FindPathToBlackboardDestination(
