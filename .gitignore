@@ -91,3 +91,4 @@ DerivedDataCache/*
 # Ignore compile commands
 compile_commands.json
 
+Config/DefaultEditorPerProjectUserSettings.ini
