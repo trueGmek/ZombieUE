@@ -47,15 +47,18 @@ void FZombieAIDebugger::CollectData(APlayerController* OwnerPC, AActor* DebugAct
 }
 
 FDebugData FZombieAIDebugger::FetchDebugData(AZombieCharacter& Character) {
-  if (Character.RootMotionNavigationComponent == nullptr || Character.HealthComponent == nullptr) {
+  auto RMNavigationComponent = Character.RootMotionNavigationComponent;
+
+  if (RMNavigationComponent == nullptr || RMNavigationComponent->GetLastPath() == nullptr ||
+      Character.HealthComponent == nullptr) {
     return DefaultDebugData;
   }
 
   return {
-      Character.RootMotionNavigationComponent->GetUsed(),
+      RMNavigationComponent->GetUsed(),
       Character.HealthComponent->CurrentHealth,
       Character.GetFullName(),
-      Character.RootMotionNavigationComponent->GetLastPath()->PathPoints};
+      RMNavigationComponent->GetLastPath()->PathPoints};
 }
 
 void FZombieAIDebugger::DrawData(APlayerController* OwnerPC, FGameplayDebuggerCanvasContext& CanvasContext) {
