@@ -4,15 +4,12 @@
 
 #include "AIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
-#include "GameplayDebugger.h"
 #include "HAL/Platform.h"
 #include "TimerManager.h"
-#include "Tools/ZombieAIDebugger.h"
 #include "ZombieCharacter.h"
 
 AZombieAIController::AZombieAIController() {
   AIperceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("AI Sight"));
-  AIperceptionComponent->OnTargetPerceptionUpdated.AddDynamic(this, &AZombieAIController::UpdatePerception);
 }
 
 void AZombieAIController::BeginPlay() {
@@ -40,16 +37,16 @@ void AZombieAIController::LoseEnemyReference() const {
 
 void AZombieAIController::OnPossess(APawn* InPawn) {
   Super::OnPossess(InPawn);
+  ZombieCharacter = Cast<AZombieCharacter>(InPawn);
 
-  auto* zombieCharacter = Cast<AZombieCharacter>(InPawn);
-
-  if (zombieCharacter == nullptr) {
+  if (ZombieCharacter == nullptr || BehaviorTree == nullptr) {
+    UE_LOG(LogTemp, Error, TEXT("Error when possessing an actor"));
     return;
   }
 
-  ensureMsgf(BehaviorTree, TEXT("Behaviour tree is not set"));
   SetUpBehaviorTree();
-  zombieCharacter->OnTakeDamage.AddDynamic(this, &AZombieAIController::HandleTakeAnyDamage);
+  ZombieCharacter->OnTakeDamage.AddDynamic(this, &AZombieAIController::SetDamageBlackboardFlag);
+  ZombieCharacter->HealthComponent->OnDeath.AddDynamic(this, &AZombieAIController::HandleDeathLogic);
 }
 
 void AZombieAIController::SetUpBehaviorTree() {
@@ -57,12 +54,24 @@ void AZombieAIController::SetUpBehaviorTree() {
   ensureMsgf(bIsRunning, TEXT("The behaviour tree is not running"));
 
   UBehaviorTreeComponent* BTComponent = Cast<UBehaviorTreeComponent>(GetBrainComponent());
-  ensureMsgf(BTComponent, TEXT("BTComponent is nullptr"));
-  ensureMsgf(ChaseInjectionTag.IsValid(), TEXT("ChaseInjectionTag is not valid"));
-  ensureMsgf(ChaseBehaviorTree.Get(), TEXT("ChaseBehaviorTree is not set!"));
   BTComponent->SetDynamicSubtree(ChaseInjectionTag, ChaseBehaviorTree.Get());
 }
 
-void AZombieAIController::HandleTakeAnyDamage() {
+void AZombieAIController::SetDamageBlackboardFlag() {
   BlackboardComponent->SetValueAsBool(IsHitBlackboardKey, true);
+}
+
+void AZombieAIController::HandleDeathLogic() {
+  // After this stage the BT should consider the agent to be dead
+  BlackboardComponent->SetValueAsBool(IsDeadBlackobardKey, true);
+
+  GetWorldTimerManager().SetTimer(
+      DestroyAgentTimerHandle, this, &AZombieAIController::DestroyAgent, DestroyAgentTimeDelay);
+}
+
+void AZombieAIController::DestroyAgent() {
+  UnPossess();
+  if (!(ZombieCharacter->Destroy() && Destroy())) {
+    UE_LOG(LogTemp, Error, TEXT("Could not destroy agent!"));
+  }
 }

@@ -14,6 +14,7 @@ enum class EZombieAnimKeys : uint8 {
   IsAttacking UMETA(DisplayName = "Is Attacking"),
   IsScreaming UMETA(DisplayName = "Is Screaming"),
   IsFeeding UMETA(DisplayName = "Is Feeding"),
+  IsDead UMETA(DisplayName = "Is Dead"),
 };
 
 /*

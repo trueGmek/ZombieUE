@@ -24,6 +24,10 @@ public:
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
   USoundBase* FireSound;
 
+
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+  float WeaponDamage;
+
   /** AnimMontage to play each time we fire */
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
   UAnimMontage* FireAnimation;

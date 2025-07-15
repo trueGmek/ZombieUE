@@ -12,8 +12,7 @@ bool UAutomaticWeaponComponent::AttachWeaponToPlayer(APlayerCharacter* TargetCha
   Character = TargetCharacter;
 
   // Check that the character is valid, and has no weapon component yet
-  if (Character == nullptr ||
-      Character->GetInstanceComponents().FindItemByClass<UAutomaticWeaponComponent>()) {
+  if (Character == nullptr || Character->GetInstanceComponents().FindItemByClass<UAutomaticWeaponComponent>()) {
     return false;
   }
 
@@ -28,8 +27,8 @@ bool UAutomaticWeaponComponent::AttachWeaponToPlayer(APlayerCharacter* TargetCha
 
 void UAutomaticWeaponComponent::BindInputs() {
   if (const auto* PlayerController = Cast<APlayerController>(Character->GetController())) {
-    if (auto* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(
-            PlayerController->GetLocalPlayer())) {
+    if (auto* Subsystem =
+            ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer())) {
       // Set the priority of the mapping to 1, so that it overrides the Jump action with the Fire action when
       // using touch input
       Subsystem->AddMappingContext(FireMappingContext, 1);
@@ -38,17 +37,17 @@ void UAutomaticWeaponComponent::BindInputs() {
     if (UEnhancedInputComponent* EnhancedInputComponent =
             Cast<UEnhancedInputComponent>(PlayerController->InputComponent)) {
       // Fire
-      EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Started, this,
-                                         &UAutomaticWeaponComponent::CacheFirePressed);
+      EnhancedInputComponent->BindAction(
+          FireAction, ETriggerEvent::Started, this, &UAutomaticWeaponComponent::CacheFirePressed);
 
-      EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Completed, this,
-                                         &UAutomaticWeaponComponent::CacheFireReleased);
+      EnhancedInputComponent->BindAction(
+          FireAction, ETriggerEvent::Completed, this, &UAutomaticWeaponComponent::CacheFireReleased);
     }
   }
 }
 
-void UAutomaticWeaponComponent::TickComponent(float DeltaTime, ELevelTick TickType,
-                                              FActorComponentTickFunction* ThisTickFunction) {
+void UAutomaticWeaponComponent::TickComponent(
+    float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) {
   Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
   LastFireTime += DeltaTime;
 
@@ -110,8 +109,7 @@ void UAutomaticWeaponComponent::ManageFX() const {
   }
 }
 
-void UAutomaticWeaponComponent::SpawnProjectile(AController* const CharacterController,
-                                                UWorld* const World) const {
+void UAutomaticWeaponComponent::SpawnProjectile(AController* const CharacterController, UWorld* const World) const {
   const APlayerController* PlayerController = Cast<APlayerController>(CharacterController);
   const FRotator SpawnRotation = PlayerController->PlayerCameraManager->GetCameraRotation();
   const FVector SpawnLocation = GetOwner()->GetActorLocation() + SpawnRotation.RotateVector(MuzzleOffset);
@@ -136,20 +134,19 @@ void UAutomaticWeaponComponent::HitScan(AController* const CharacterController) 
   FCollisionQueryParams QueryParams;
   QueryParams.AddIgnoredActor(CharacterController);
   QueryParams.bTraceComplex = true;
-  bool bHit =
-      GetWorld()->LineTraceSingleByChannel(HitResult, EyeLocation, End, ECC_GameTraceChannel1, QueryParams);
+  bool bHit = GetWorld()->LineTraceSingleByChannel(HitResult, EyeLocation, End, ECC_GameTraceChannel1, QueryParams);
 
   if (bHit) {
-    DrawDebugLine(GetWorld(), EyeLocation, HitResult.Location, FColor::Red, false, 1.0f, 0, 1.0f);
-    DrawDebugSphere(GetWorld(), HitResult.Location, 8.0f, 12, FColor::Green, false, 1.0f);
+    DrawDebugLine(GetWorld(), EyeLocation, HitResult.Location, FColor::Red, false, 1.0F, 0, 1.0F);
+    DrawDebugSphere(GetWorld(), HitResult.Location, 8.0F, 12, FColor::Green, false, 1.0f);
 
     AActor* HitActor = HitResult.GetActor();
-    if (HitActor) {
-      UGameplayStatics::ApplyPointDamage(HitActor, 20.0f, EyeRotation.Vector(), HitResult,
-                                         CharacterController, CharacterController, nullptr);
+    if (HitActor != nullptr) {
+      UGameplayStatics::ApplyPointDamage(
+          HitActor, WeaponDamage, EyeRotation.Vector(), HitResult, CharacterController, CharacterController, nullptr);
     }
   } else {
     // Debug line for miss
-    DrawDebugLine(GetWorld(), EyeLocation, End, FColor::Blue, false, 1.0f, 0, 1.0f);
+    DrawDebugLine(GetWorld(), EyeLocation, End, FColor::Blue, false, 1.0F, 0, 1.0F);
   }
 }

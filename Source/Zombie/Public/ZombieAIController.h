@@ -5,8 +5,9 @@
 #include "BehaviorTree/BehaviorTreeTypes.h"
 #include "CoreMinimal.h"
 #include "Perception/AIPerceptionComponent.h"
-
 #include "UObject/ObjectMacros.h"
+#include "ZombieCharacter.h"
+
 #include "ZombieAIController.generated.h"
 
 UCLASS()
@@ -26,6 +27,9 @@ public:
 
   UPROPERTY(EditDefaultsOnly, Category = "AI")
   float FollowAfterLosingSightPeriod{3.0F}; // NOLINT
+                                            //
+  UPROPERTY(EditDefaultsOnly, Category = "AI")
+  float DestroyAgentTimeDelay{5.0F}; // NOLINT
 
   UPROPERTY()
   UBlackboardComponent* BlackboardComponent;
@@ -39,11 +43,18 @@ public:
   UPROPERTY(EditDefaultsOnly, Category = "AI")
   FName IsHitBlackboardKey{"IsHit"};
 
+  UPROPERTY(EditDefaultsOnly, Category = "AI")
+  FName IsDeadBlackobardKey{"IsDead"};
+
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
   FGameplayTag ChaseInjectionTag;
 
 protected:
   FTimerHandle SeenPlayerTimerHandle;
+  FTimerHandle DestroyAgentTimerHandle;
+
+  UPROPERTY()
+  TObjectPtr<AZombieCharacter> ZombieCharacter;
 
 public:
   AZombieAIController();
@@ -53,12 +64,16 @@ protected:
   virtual void BeginPlay() override;
   virtual void SetUpBehaviorTree();
 
-private:
   UFUNCTION()
   void UpdatePerception(AActor* Actor, FAIStimulus Stimulus);
 
   UFUNCTION()
-  void HandleTakeAnyDamage();
+  void SetDamageBlackboardFlag();
 
+  UFUNCTION()
+  void HandleDeathLogic();
+
+private:
   void LoseEnemyReference() const;
+  void DestroyAgent();
 };
