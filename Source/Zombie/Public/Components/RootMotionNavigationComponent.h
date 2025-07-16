@@ -38,6 +38,7 @@ protected:
   UPROPERTY(EditAnywhere, meta = (ToolTip = "Used in ProjectPointToNavMesh method"))
   FVector QueryExtent{100, 100, 100};
 
+  UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
   bool bIsUsed;
 
 public:
