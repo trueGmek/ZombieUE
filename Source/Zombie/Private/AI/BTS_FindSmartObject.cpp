@@ -9,8 +9,6 @@
 #include "SmartObjectSubsystem.h"
 
 UBTS_FindSmartObject::UBTS_FindSmartObject(const FObjectInitializer& ObjectInitializer) {
-  UE_LOG(LogTemp, Display, TEXT("CREATING UBTS_FindSmartObject"));
-
   NodeName = "Search for Smart Objects";
 
   bTickIntervals = true;

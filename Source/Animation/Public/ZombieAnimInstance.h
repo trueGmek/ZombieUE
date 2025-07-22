@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Animation/AnimInstance.h"
 #include "CharacterAnimInstance.h"
 #include "CoreMinimal.h"
 
@@ -42,4 +41,6 @@ public:
 
   UPROPERTY(BlueprintReadWrite, EditAnywhere)
   bool bIsFeeding;
+
+  void SetFlag(EZombieAnimKeys ZombieAnimKey, bool bValue);
 };
