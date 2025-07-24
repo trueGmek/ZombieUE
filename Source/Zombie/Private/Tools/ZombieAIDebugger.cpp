@@ -7,6 +7,7 @@
 #include "UObject/NameTypes.h"
 #include "ZombieAIController.h"
 #include "ZombieCharacter.h"
+#include "ZombieRootMotionCharacter.h"
 
 void FDebugData::Serialize(FArchive& Ar) {
   Ar << bIsMoving;
@@ -40,13 +41,13 @@ void FZombieAIDebugger::CollectData(APlayerController* OwnerPC, AActor* DebugAct
     return;
   }
 
-  AZombieCharacter* Pawn = Cast<AZombieCharacter>(ZombieController->GetPawn());
+  AZombieRootMotionCharacter* Pawn = Cast<AZombieRootMotionCharacter>(ZombieController->GetPawn());
   if (Pawn != nullptr) {
     DebugData = FetchDebugData(*Pawn);
   }
 }
 
-FDebugData FZombieAIDebugger::FetchDebugData(AZombieCharacter& Character) {
+FDebugData FZombieAIDebugger::FetchDebugData(AZombieRootMotionCharacter& Character) {
   auto RMNavigationComponent = Character.RootMotionNavigationComponent;
 
   if (RMNavigationComponent == nullptr || RMNavigationComponent->GetLastPath() == nullptr ||

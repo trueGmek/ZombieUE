@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "NavigationPath.h"
 #include "ZombieAnimInstance.h"
-#include "ZombieCharacter.h"
+#include "ZombieRootMotionCharacter.h"
 
 #include "BTT_MoveWithRootMotion.generated.h"
 
@@ -37,7 +37,7 @@ public:
   FValueOrBBKey_Float NextPointRadius{50.0F};
 
   UPROPERTY()
-  TObjectPtr<AZombieCharacter> ZombieCharacter;
+  TObjectPtr<AZombieRootMotionCharacter> ZombieCharacter;
 
   UPROPERTY()
   TObjectPtr<UNavigationPath> CurrentPath;

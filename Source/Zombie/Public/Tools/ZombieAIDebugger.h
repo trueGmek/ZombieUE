@@ -2,7 +2,7 @@
 
 #include "GameplayDebuggerCategory.h"
 #include "ZombieAIController.h"
-#include "ZombieCharacter.h"
+#include "ZombieRootMotionCharacter.h"
 
 struct FDebugData {
 
@@ -35,5 +35,5 @@ public:
 
 private:
   void DrawPath(UWorld* World) const;
-  static FDebugData FetchDebugData(AZombieCharacter& Character);
+  static FDebugData FetchDebugData(AZombieRootMotionCharacter& Character);
 };

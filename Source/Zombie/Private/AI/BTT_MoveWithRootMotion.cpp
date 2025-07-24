@@ -51,7 +51,7 @@ EBTNodeResult::Type UBTT_MoveWithRootMotion::ExecuteTask(UBehaviorTreeComponent&
   Blackboard = OwnerComp.GetBlackboardComponent();
   ensureMsgf(Blackboard, TEXT("Blackboard is null"));
 
-  ZombieCharacter = Cast<AZombieCharacter>(OwnerComp.GetAIOwner()->GetPawn());
+  ZombieCharacter = Cast<AZombieRootMotionCharacter>(OwnerComp.GetAIOwner()->GetPawn());
   ensureMsgf(ZombieCharacter, TEXT("Owner is not of type AZombieCharacter"));
 
   CurrentPath =

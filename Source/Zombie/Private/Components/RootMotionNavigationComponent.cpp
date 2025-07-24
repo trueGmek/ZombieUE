@@ -13,9 +13,9 @@ URootMotionNavigationComponent::URootMotionNavigationComponent() {}
 
 void URootMotionNavigationComponent::BeginPlay() {
   ZombieAnimInstance = Cast<UZombieAnimInstance>(GetOwner<ACharacter>()->GetMesh()->GetAnimInstance());
-  NavigationSystem = UNavigationSystemV1::GetNavigationSystem(GetWorld());
-
   ensureMsgf(ZombieAnimInstance, TEXT("ZombieAnimInstance reference is missing"));
+
+  NavigationSystem = UNavigationSystemV1::GetNavigationSystem(GetWorld());
   ensureMsgf(NavigationSystem, TEXT("NavigationSystem is null"));
 }
 
