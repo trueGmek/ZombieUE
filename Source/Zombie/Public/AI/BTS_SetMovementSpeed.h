@@ -6,10 +6,20 @@
 
 #include "BTS_SetMovementSpeed.generated.h"
 
-struct FSetMovementSpeedMemory {
+USTRUCT(BlueprintType)
+struct FMovementData {
+  GENERATED_USTRUCT_BODY()
 
+  UPROPERTY(EditAnywhere, BlueprintReadWrite)
+  float MaxMovementSpeed;
+
+  UPROPERTY(EditAnywhere, BlueprintReadWrite)
+  float MaxAcceleration;
+};
+
+struct FSetMovementSpeedMemory {
   UCharacterMovementComponent* MovementComponent;
-  float PreviousMovementSpeed;
+  FMovementData PreviousMovementData;
 };
 
 UCLASS()
@@ -19,7 +29,7 @@ public:
   UBTS_SetMovementSpeed(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 
   UPROPERTY(BlueprintReadWrite, EditAnywhere)
-  float MaxMovementSpeed;
+  FMovementData MovementData;
 
 protected:
   ZOMBIE_API virtual void OnBecomeRelevant(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory);

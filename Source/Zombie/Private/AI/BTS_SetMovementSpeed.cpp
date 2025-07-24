@@ -29,12 +29,16 @@ void UBTS_SetMovementSpeed::OnBecomeRelevant(UBehaviorTreeComponent& OwnerComp, 
   ensure(thisNodeMemory);
 
   thisNodeMemory->MovementComponent = movementComponent;
-  thisNodeMemory->PreviousMovementSpeed = movementComponent->MaxWalkSpeed;
-  movementComponent->MaxWalkSpeed = MaxMovementSpeed;
+  thisNodeMemory->PreviousMovementData =
+      FMovementData{movementComponent->MaxWalkSpeed, movementComponent->MaxAcceleration};
+
+  movementComponent->MaxWalkSpeed = MovementData.MaxMovementSpeed;
+  movementComponent->MaxAcceleration = MovementData.MaxAcceleration;
 }
 
 void UBTS_SetMovementSpeed::OnCeaseRelevant(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) {
   const FSetMovementSpeedMemory* thisNodeMemory = CastInstanceNodeMemory<FSetMovementSpeedMemory>(NodeMemory);
   ensure(thisNodeMemory);
-  thisNodeMemory->MovementComponent->MaxWalkSpeed = thisNodeMemory->PreviousMovementSpeed;
+  thisNodeMemory->MovementComponent->MaxWalkSpeed = thisNodeMemory->PreviousMovementData.MaxMovementSpeed;
+  thisNodeMemory->MovementComponent->MaxAcceleration = thisNodeMemory->PreviousMovementData.MaxAcceleration;
 }
