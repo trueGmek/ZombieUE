@@ -40,7 +40,6 @@ To run or edit this project:
 - Agents are able to recognize player as their enemy. They will approach the player on sight and try to attack them.
 - Zombies can play tount animation when they see their opponent.
 - Agents can interact with Smart Objectes in the scene.
-- Implements root motion-based movement for realistic character locomotion. Includes a wide range of animation states (idle, walk, run, attack, bite, death, hit, scream) and blend spaces for fluid transitions.
 - Custom Debugging Tools: Integrates a custom Gameplay Debugger category for real-time AI state visualization and debugging.
 
 ## Author
