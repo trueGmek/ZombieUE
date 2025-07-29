@@ -2,12 +2,14 @@
 
 #include "AIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "Components/BlackboardValuesSetter.h"
 #include "HAL/Platform.h"
 #include "TimerManager.h"
 #include "ZombieCharacter.h"
 
 AZombieAIController::AZombieAIController() {
   AIperceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("AI Sight"));
+  BlackboardValuesSetter = CreateDefaultSubobject<UBlackboardValuesSetter>(TEXT("BlackboardValuesSetter"));
 }
 
 void AZombieAIController::BeginPlay() {

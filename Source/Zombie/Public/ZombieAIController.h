@@ -3,6 +3,7 @@
 #include "AIController.h"
 #include "BehaviorTree/BehaviorTree.h"
 #include "BehaviorTree/BehaviorTreeTypes.h"
+#include "Components/BlackboardValuesSetter.h"
 #include "CoreMinimal.h"
 #include "Perception/AIPerceptionComponent.h"
 #include "UObject/ObjectMacros.h"
@@ -24,6 +25,9 @@ public:
 
   UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AI")
   UAIPerceptionComponent* AIperceptionComponent;
+
+  UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AI")
+  UBlackboardValuesSetter* BlackboardValuesSetter;
 
   UPROPERTY(EditDefaultsOnly, Category = "AI")
   float FollowAfterLosingSightPeriod{3.0F}; // NOLINT
