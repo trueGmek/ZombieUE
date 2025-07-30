@@ -1,7 +1,9 @@
 #include "Components/BlackboardValuesSetter.h"
 #include "AIController.h"
 #include "Animation/AnimMontage.h"
+#include "BehaviorTree/Blackboard/BlackboardKeyType_Float.h"
 #include "BehaviorTree/Blackboard/BlackboardKeyType_Object.h"
+#include "BehaviorTree/Blackboard/BlackboardKeyType_Vector.h"
 #include "BehaviorTree/BlackboardComponent.h"
 
 void UBlackboardValuesSetter::SetBlackboardKeySelectorFilters() {
@@ -39,6 +41,7 @@ void UBlackboardValuesSetter::BeginPlay() {
       AIController = Cast<AAIController>(OwnerPawn->GetController());
     }
   }
+
   SetValues(*AIController->GetBlackboardComponent());
 }
 

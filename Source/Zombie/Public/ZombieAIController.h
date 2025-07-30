@@ -51,6 +51,12 @@ public:
   FName IsDeadBlackobardKey{"IsDead"};
 
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
+  FName LastKnownEnemyLocationKey{"LastKnownEnemyLocation"};
+
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
+  FName TimeOfLastEnemySight{"TimeOfLastEnemySight"};
+
+  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
   FGameplayTag ChaseInjectionTag;
 
 protected:

@@ -3,7 +3,6 @@
 #include "Animation/AnimMontage.h"
 #include "BehaviorTree/BehaviorTreeTypes.h"
 #include "Components/ActorComponent.h"
-#include "CoreMinimal.h"
 #include "UObject/ObjectMacros.h"
 #include "UObject/ObjectPtr.h"
 

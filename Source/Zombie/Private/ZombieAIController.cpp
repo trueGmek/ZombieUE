@@ -23,9 +23,10 @@ void AZombieAIController::UpdatePerception(AActor* Actor, FAIStimulus Stimulus) 
     GetWorldTimerManager().ClearTimer(SeenPlayerTimerHandle);
     BlackboardComponent->SetValueAsObject(EnemyBlackboardKey, Actor);
     BlackboardComponent->SetValueAsBool(LOSBlackboardKey, true);
-
+    BlackboardComponent->SetValueAsVector(LastKnownEnemyLocationKey, Actor->GetActorLocation());
   } else {
     BlackboardComponent->SetValueAsBool(LOSBlackboardKey, false);
+    BlackboardComponent->SetValueAsFloat(TimeOfLastEnemySight, GetWorld()->GetTimeSeconds());
     GetWorldTimerManager().SetTimer(
         SeenPlayerTimerHandle, this, &AZombieAIController::LoseEnemyReference, FollowAfterLosingSightPeriod, false);
   }
@@ -48,6 +49,8 @@ void AZombieAIController::OnPossess(APawn* InPawn) {
   ZombieCharacter->OnTakeDamage.AddDynamic(this, &AZombieAIController::SetDamageBlackboardFlag);
   ZombieCharacter->HealthComponent->OnDeath.AddDynamic(this, &AZombieAIController::HandleDeathLogic);
 }
+
+void Tick(float DeltaTime) {}
 
 void AZombieAIController::SetUpBehaviorTree() {
   bool bIsRunning = RunBehaviorTree(BehaviorTree);

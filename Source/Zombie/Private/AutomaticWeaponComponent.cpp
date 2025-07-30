@@ -86,10 +86,12 @@ void UAutomaticWeaponComponent::Fire() const {
   ensureMsgf(GetWorld(), TEXT("World != nullptr"));
   UWorld* const World = GetWorld();
 
-  if (Type == EType::Projectile)
+  if (Type == EType::Projectile) {
     SpawnProjectile(CharacterController, World);
-  if (Type == EType::Hitscan)
+  }
+  if (Type == EType::Hitscan) {
     HitScan(CharacterController);
+  }
 
   ManageFX();
 }

@@ -4,4 +4,3 @@ AllowShortFunctionsOnASingleLine: Empty
 PointerAlignment: Left
 AlignAfterOpenBracket: AlwaysBreak
 BinPackArguments: false
-SeparateDefinitionBlocks: Always

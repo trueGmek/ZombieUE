@@ -1,6 +1,7 @@
 #pragma once
 
 #include "BehaviorTree/BTService.h"
+#include "BehaviorTree/ValueOrBBKey.h"
 #include "CoreMinimal.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
@@ -11,10 +12,10 @@ struct FMovementData {
   GENERATED_USTRUCT_BODY()
 
   UPROPERTY(EditAnywhere, BlueprintReadWrite)
-  float MaxMovementSpeed;
+  FValueOrBBKey_Float MaxMovementSpeed;
 
   UPROPERTY(EditAnywhere, BlueprintReadWrite)
-  float MaxAcceleration;
+  FValueOrBBKey_Float MaxAcceleration;
 };
 
 struct FSetMovementSpeedMemory {
