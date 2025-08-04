@@ -6,6 +6,7 @@
 #include "Components/BlackboardValuesSetter.h"
 #include "CoreMinimal.h"
 #include "Perception/AIPerceptionComponent.h"
+#include "PointOfInvestigation.h"
 #include "UObject/ObjectMacros.h"
 #include "ZombieCharacter.h"
 
@@ -51,10 +52,7 @@ public:
   FName IsDeadBlackobardKey{"IsDead"};
 
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
-  FName LastKnownEnemyLocationKey{"LastKnownEnemyLocation"};
-
-  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
-  FName TimeOfLastEnemySight{"TimeOfLastEnemySight"};
+  FName PointsOfInterestKey{"PointsOfInterest"};
 
   UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
   FGameplayTag ChaseInjectionTag;
@@ -63,8 +61,14 @@ protected:
   FTimerHandle SeenPlayerTimerHandle;
   FTimerHandle DestroyAgentTimerHandle;
 
+  UPROPERTY(BlueprintReadWrite)
+  FPointOfInvestigation PointOfInvestigation{};
+
   UPROPERTY()
-  TObjectPtr<AZombieCharacter> ZombieCharacter;
+  AActor* LastSeenEnemy;
+
+  UPROPERTY()
+  AZombieCharacter* ZombieCharacter;
 
 public:
   AZombieAIController();
@@ -86,4 +90,6 @@ protected:
 private:
   void LoseEnemyReference() const;
   void DestroyAgent();
+  void SavePOIData(AActor*& Actor);
+  bool WasEnemyLostFromSight();
 };

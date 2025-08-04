@@ -1,9 +1,11 @@
 #include "ZombieAIController.h"
 
+#include "AI/ZombieAILogCattegory.h"
 #include "AIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Components/BlackboardValuesSetter.h"
 #include "HAL/Platform.h"
+#include "Logging/LogVerbosity.h"
 #include "TimerManager.h"
 #include "ZombieCharacter.h"
 
@@ -15,21 +17,6 @@ AZombieAIController::AZombieAIController() {
 void AZombieAIController::BeginPlay() {
   Super::BeginPlay();
   BlackboardComponent = GetBlackboardComponent();
-}
-
-void AZombieAIController::UpdatePerception(AActor* Actor, FAIStimulus Stimulus) {
-  if (Actor != nullptr && Actor->ActorHasTag("Player") && Stimulus.WasSuccessfullySensed()) {
-
-    GetWorldTimerManager().ClearTimer(SeenPlayerTimerHandle);
-    BlackboardComponent->SetValueAsObject(EnemyBlackboardKey, Actor);
-    BlackboardComponent->SetValueAsBool(LOSBlackboardKey, true);
-    BlackboardComponent->SetValueAsVector(LastKnownEnemyLocationKey, Actor->GetActorLocation());
-  } else {
-    BlackboardComponent->SetValueAsBool(LOSBlackboardKey, false);
-    BlackboardComponent->SetValueAsFloat(TimeOfLastEnemySight, GetWorld()->GetTimeSeconds());
-    GetWorldTimerManager().SetTimer(
-        SeenPlayerTimerHandle, this, &AZombieAIController::LoseEnemyReference, FollowAfterLosingSightPeriod, false);
-  }
 }
 
 void AZombieAIController::LoseEnemyReference() const {
@@ -60,21 +47,50 @@ void AZombieAIController::SetUpBehaviorTree() {
   BTComponent->SetDynamicSubtree(ChaseInjectionTag, ChaseBehaviorTree.Get());
 }
 
+void AZombieAIController::DestroyAgent() {
+  UnPossess();
+  if (!(ZombieCharacter->Destroy() && Destroy())) {
+    UE_LOG(LogTemp, Error, TEXT("Could not destroy agent!"));
+  }
+}
+
 void AZombieAIController::SetDamageBlackboardFlag() {
   BlackboardComponent->SetValueAsBool(IsHitBlackboardKey, true);
 }
 
 void AZombieAIController::HandleDeathLogic() {
-  // After this stage the BT should consider the agent to be dead
   BlackboardComponent->SetValueAsBool(IsDeadBlackobardKey, true);
 
   GetWorldTimerManager().SetTimer(
       DestroyAgentTimerHandle, this, &AZombieAIController::DestroyAgent, DestroyAgentTimeDelay);
 }
 
-void AZombieAIController::DestroyAgent() {
-  UnPossess();
-  if (!(ZombieCharacter->Destroy() && Destroy())) {
-    UE_LOG(LogTemp, Error, TEXT("Could not destroy agent!"));
+void AZombieAIController::SavePOIData(AActor*& Actor) {
+  PointOfInvestigation.Location = Actor->GetActorLocation();
+  PointOfInvestigation.Directon = Actor->GetActorForwardVector();
+  PointOfInvestigation.TimeStamp = GetWorld()->GetTimeSeconds();
+  PointOfInvestigation.bWasInspected = false;
+}
+
+void AZombieAIController::UpdatePerception(AActor* Actor, FAIStimulus Stimulus) {
+  UE_LOG(ZombieAI, Display, TEXT("Updating perception"));
+  if (Actor != nullptr && Actor->ActorHasTag("Player") && Stimulus.WasSuccessfullySensed()) {
+    UE_LOG(ZombieAI, Display, TEXT("Seeing player"));
+    GetWorldTimerManager().ClearTimer(SeenPlayerTimerHandle);
+    BlackboardComponent->SetValueAsObject(EnemyBlackboardKey, Actor);
+    BlackboardComponent->SetValueAsBool(LOSBlackboardKey, true);
+    LastSeenEnemy = Actor;
+  } else if (WasEnemyLostFromSight()) {
+
+    UE_LOG(ZombieAI, Display, TEXT("Lost player from sight"));
+    SavePOIData(Actor);
+    BlackboardComponent->SetValueAsBool(LOSBlackboardKey, false);
+    GetWorldTimerManager().SetTimer(
+        SeenPlayerTimerHandle, this, &AZombieAIController::LoseEnemyReference, FollowAfterLosingSightPeriod, false);
+    LastSeenEnemy = nullptr;
   }
+}
+
+bool AZombieAIController::WasEnemyLostFromSight() {
+  return LastSeenEnemy != nullptr;
 }
